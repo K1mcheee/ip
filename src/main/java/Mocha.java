@@ -1,8 +1,11 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Mocha {
     private static final String BR = "____________________________________________________________";
     private static boolean isRunning = true;
+    private static List<String> commands = new ArrayList<>();
 
     public static void main(String[] args) {
         System.out.println(BR + "\n Hello! I'm Mocha");
@@ -17,6 +20,7 @@ public class Mocha {
                 System.out.println(BR + "\n Bye. Hope to see you again soon! \n" + BR);
                 break;
             }
+            commands.add(input);
             System.out.println(BR + "\n" + input + "\n" + BR);
         }
 
