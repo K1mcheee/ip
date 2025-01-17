@@ -20,8 +20,17 @@ public class Mocha {
                 System.out.println(BR + "\n Bye. Hope to see you again soon! \n" + BR);
                 break;
             }
-            commands.add(input);
-            System.out.println(BR + "\n" + input + "\n" + BR);
+            if (input.toLowerCase().equals("list")) {
+                System.out.println(BR);
+                for (int i = 1; i <= commands.size(); i++) {
+                    System.out.println(i + ". " + commands.get(i - 1));
+                }
+                System.out.println(BR + "\n");
+            } else {
+                commands.add(input);
+                System.out.println(BR + "\n" + input + "\n" + BR);
+            }
+
         }
 
     }
