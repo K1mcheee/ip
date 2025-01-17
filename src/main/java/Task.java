@@ -30,7 +30,7 @@ public class Task {
     @Override
     public String toString() {
         String mark = this.isDone ? "X" : " ";
-        return String.format("[%s] %s", mark, this.name);
+        return String.format(" [%s] %s", mark, this.name);
     }
 
 }

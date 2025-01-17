@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Mocha {
     private static final String BR = "____________________________________________________________";
     private static boolean isRunning = true;
-    private static List<String> commands = new ArrayList<>();
+    private static List<Task> commands = new ArrayList<>();
 
     public static void main(String[] args) {
         System.out.println(BR + "\n Hello! I'm Mocha");
@@ -15,11 +15,13 @@ public class Mocha {
 
         while (isRunning) {
             String input = scanner.nextLine();
+            // check for bye command to exit
             if (input.toLowerCase().equals("bye")) {
                 isRunning = false;
                 System.out.println(BR + "\n Bye. Hope to see you again soon! \n" + BR);
                 break;
             }
+            // check for command to print list
             if (input.toLowerCase().equals("list")) {
                 System.out.println(BR);
                 for (int i = 1; i <= commands.size(); i++) {
@@ -27,8 +29,27 @@ public class Mocha {
                 }
                 System.out.println(BR + "\n");
             } else {
-                commands.add(input);
-                System.out.println(BR + "\n" + input + "\n" + BR);
+                // parse input
+                String[] split = input.split(" ");
+                String tmp = split[0].toLowerCase();
+
+                // check for keywords mark and unmark
+                if (tmp.equals("mark") || tmp.equals("unmark")) {
+                    int idx = Integer.parseInt(split[1]);
+
+                    if (tmp.equals("mark")) {
+                        commands.get(idx - 1).mark();
+                    }
+                    if (tmp.equals("unmark")) {
+                        commands.get(idx - 1).unmark();
+                    }
+                } else {
+                    // if not keyword, add to list of commands
+                    Task task = new Task(input);
+                    commands.add(task);
+                    System.out.println(BR + "\n added: " + input + "\n" + BR);
+                }
+
             }
 
         }
