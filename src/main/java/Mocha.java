@@ -37,11 +37,19 @@ public class Mocha {
                 if (tmp.equals("mark") || tmp.equals("unmark")) {
                     int idx = Integer.parseInt(split[1]);
 
+                    if (idx < 1 || idx > commands.size()) {
+                        throw new ArrayIndexOutOfBoundsException("Task does not exist");
+                    }
+
                     if (tmp.equals("mark")) {
+                        System.out.println(BR);
                         commands.get(idx - 1).mark();
+                        System.out.println(BR);
                     }
                     if (tmp.equals("unmark")) {
+                        System.out.println(BR);
                         commands.get(idx - 1).unmark();
+                        System.out.println(BR);
                     }
                 } else {
                     // if not keyword, add to list of commands
