@@ -23,14 +23,22 @@ public class Task {
         System.out.println(" OK, I've marked this task as not done yet:");
         System.out.println(this.toString());
     }
+
     /**
-     * Checks whether tasks is done and return accordingly
-     * @return Task name and indication of status
+     * Check status of task. Returns corresponding icon
+     * @return "X" if task is done else returns " "
+     */
+    private String getStatusIcon() {
+        return this.isDone ? "X" : " ";
+    }
+
+    /**
+     * Prints the task and status of task
+     * @return indication of status followed by task name
      */
     @Override
     public String toString() {
-        String mark = this.isDone ? "X" : " ";
-        return String.format(" [%s] %s", mark, this.name);
+        return String.format(" [%s] %s", this.getStatusIcon(), this.name);
     }
 
 }

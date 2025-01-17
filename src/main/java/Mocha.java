@@ -25,7 +25,7 @@ public class Mocha {
             if (input.toLowerCase().equals("list")) {
                 System.out.println(BR);
                 for (int i = 1; i <= commands.size(); i++) {
-                    System.out.println(i + ". " + commands.get(i - 1));
+                    System.out.println(i + "." + commands.get(i - 1));
                 }
                 System.out.println(BR + "\n");
             } else {
@@ -38,7 +38,7 @@ public class Mocha {
                     int idx = Integer.parseInt(split[1]);
 
                     if (idx < 1 || idx > commands.size()) {
-                        throw new ArrayIndexOutOfBoundsException("Task does not exist");
+                        throw new IndexOutOfBoundsException("Task does not exist");
                     }
 
                     if (tmp.equals("mark")) {
