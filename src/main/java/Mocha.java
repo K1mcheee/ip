@@ -44,7 +44,7 @@ public class Mocha {
                 for (int i = 1; i <= commands.size(); i++) {
                     System.out.println(i + "." + commands.get(i - 1));
                 }
-                System.out.println(BR + "\n");
+                System.out.println(BR);
             } else {
                 // parse input
                 String[] split = input.split(" ");
