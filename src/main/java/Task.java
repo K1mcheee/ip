@@ -1,13 +1,28 @@
+/**
+ * Encapsulates a task that a user can
+ * add to the list of the bot.
+ *
+ * @author K1mcheee
+ */
 public class Task {
+    /** name of the task */
     private String name;
+    /** status of task */
     private boolean isDone = false;
 
+    /**
+     * Constructor for the task
+     * to initialise the name.
+     *
+     * @param name Description of the task.
+     */
     public Task(String name) {
         this.name = name;
     }
 
     /**
-     * Marks task as done and prints out status of task
+     * Marks task as done and prints out status of task.
+     *
      */
     public void mark() {
         this.isDone = true;
@@ -16,7 +31,8 @@ public class Task {
     }
 
     /**
-     * Marks task as not done yet and print out status of task
+     * Marks task as not done yet and print out status of task.
+     *
      */
     public void unmark() {
         this.isDone = false;
@@ -25,16 +41,18 @@ public class Task {
     }
 
     /**
-     * Check status of task. Returns corresponding icon
-     * @return "X" if task is done else returns " "
+     * Check status of task. Returns corresponding icon.
+     *
+     * @return "X" if task is done else returns " ".
      */
     private String getStatusIcon() {
         return this.isDone ? "X" : " ";
     }
 
     /**
-     * Prints the task and status of task
-     * @return indication of status followed by task name
+     * Prints the task and status of task.
+     *
+     * @return string with indication of status followed by task name.
      */
     @Override
     public String toString() {
