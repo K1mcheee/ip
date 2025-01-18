@@ -6,6 +6,7 @@ public class Mocha {
     private static final String BR = "____________________________________________________________";
     private static boolean isRunning = true;
     private static List<Task> commands = new ArrayList<>();
+    private static Task task = null;
 
     /**
      * Helper function to print when task is added
@@ -72,16 +73,35 @@ public class Mocha {
                 } else {
                     // switch case to respond to other input
                     String name = "";
+                    String dueDate = "";
                     switch (tmp) {
                         case "todo":
                             // retrieve task
                             for (int i = 1; i < split.length; i++) {
-                                name += split[i] + " ";
+                                name += " " + split[i];
                             }
-                            Task task = new Todo(name);
+                            task = new Todo(name);
                             commands.add(task);
                             System.out.println(BR + printNew() + task + "\n" + printUpdates() + BR);
                             break;
+                        case "deadline":
+                            // retrieve task
+                            String[] cmd = date[0].split(" ");
+                            for (int i = 1; i < cmd.length; i++) {
+                                name += " " + cmd[i];
+                            }
+
+                            // retrieve deadline
+                            String[] byWhen = date[1].split(" ");
+                            for (int i = 1; i < byWhen.length; i++) {
+                                dueDate += " " + byWhen[i];
+                            }
+
+                            task = new Deadline(name, dueDate);
+                            commands.add(task);
+                            System.out.println(BR + printNew() + task + "\n" + printUpdates() + BR);
+                            break;
+
                         default:
                             throw new IllegalArgumentException("Invalid command");
                     }
