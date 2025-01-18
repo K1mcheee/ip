@@ -71,9 +71,16 @@ public class Mocha {
                         System.out.println(BR);
                     }
                 } else {
-                    // switch case to respond to other input
+                    // templates for string printing
                     String name = "";
                     String dueDate = "";
+                    String to = "";
+                    String from = "";
+
+                    // retrieves command at 0 idx of array before dueDates
+                    String[] cmd = date[0].split(" ");
+
+                    // switch case to respond to input
                     switch (tmp) {
                         case "todo":
                             // retrieve task
@@ -86,7 +93,6 @@ public class Mocha {
                             break;
                         case "deadline":
                             // retrieve task
-                            String[] cmd = date[0].split(" ");
                             for (int i = 1; i < cmd.length; i++) {
                                 name += " " + cmd[i];
                             }
@@ -98,6 +104,29 @@ public class Mocha {
                             }
 
                             task = new Deadline(name, dueDate);
+                            commands.add(task);
+                            System.out.println(BR + printNew() + task + "\n" + printUpdates() + BR);
+                            break;
+
+                        case "event":
+                            // retrieve task
+                            for (int i = 1; i < cmd.length; i++) {
+                                name += " " + cmd[i];
+                            }
+
+                            // retrieve fromDate
+                            String[] fromDate = date[1].split(" ");
+                            for (int i = 1; i < fromDate.length; i++) {
+                                from += " " + fromDate[i];
+                            }
+
+                            // retrieve toDate
+                            String[] toDate = date[2].split(" ");
+                            for (int i = 1; i < toDate.length; i++) {
+                                to += " " + toDate[i];
+                            }
+
+                            task = new Event(name, from, to);
                             commands.add(task);
                             System.out.println(BR + printNew() + task + "\n" + printUpdates() + BR);
                             break;
