@@ -1,0 +1,7 @@
+todo sleep
+deadline cs2103t iP /by Friday
+event school /from Mon /to Fri
+list
+mark 2
+list
+bye
