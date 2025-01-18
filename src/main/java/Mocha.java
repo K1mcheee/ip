@@ -7,6 +7,22 @@ public class Mocha {
     private static boolean isRunning = true;
     private static List<Task> commands = new ArrayList<>();
 
+    /**
+     * Helper function to print when task is added
+     * @return Standard reply that task is updated
+     */
+    private static String printNew() {
+        return "\n Got it. I've added this task: \n";
+    }
+
+    /**
+     * Helper function to print whenever list is updated
+     * @return  number of taasks in list
+     */
+    private static String printUpdates() {
+        return String.format(" Now you have %d tasks in the list. \n", commands.size());
+    }
+
     public static void main(String[] args) {
         System.out.println(BR + "\n Hello! I'm Mocha");
         System.out.println(" What can I do for you? \n" + BR);
@@ -31,7 +47,9 @@ public class Mocha {
             } else {
                 // parse input
                 String[] split = input.split(" ");
+                String[] date = input.split("/");
                 String tmp = split[0].toLowerCase();
+
 
                 // check for keywords mark and unmark
                 if (tmp.equals("mark") || tmp.equals("unmark")) {
@@ -52,10 +70,21 @@ public class Mocha {
                         System.out.println(BR);
                     }
                 } else {
-                    // if not keyword, add to list of commands
-                    Task task = new Task(input);
-                    commands.add(task);
-                    System.out.println(BR + "\n added: " + input + "\n" + BR);
+                    // switch case to respond to other input
+                    String name = "";
+                    switch (tmp) {
+                        case "todo":
+                            // retrieve task
+                            for (int i = 1; i < split.length; i++) {
+                                name += split[i] + " ";
+                            }
+                            Task task = new Todo(name);
+                            commands.add(task);
+                            System.out.println(BR + printNew() + task + "\n" + printUpdates() + BR);
+                            break;
+                        default:
+                            throw new IllegalArgumentException("Invalid command");
+                    }
                 }
 
             }
