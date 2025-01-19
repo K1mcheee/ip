@@ -24,21 +24,26 @@ public class Mocha {
         return String.format(" Now you have %d tasks in the list. \n", commands.size());
     }
 
+    /**
+     * Parse and validate the input entered by user and
+     * responds accordingly. If user enters invalid input,
+     * corresponding advice on the error is printed.
+     *
+     * @param input String entered by user.
+     * @throws MochaException if user enters invalid commands.
+     */
     private static void validateInput(String input) throws MochaException {
-
         // parse input
         String[] split = input.split(" ");
         String[] date = input.split("/");
         String tmp = split[0].toLowerCase();
 
-
-
         // check for keywords mark and unmark
-        if (tmp.equals("mark") || tmp.equals("unmark")) {
+        if (tmp.equals("mark") || tmp.equals("unmark") || tmp.equals("delete")) {
             int idx = Integer.parseInt(split[1]);
 
             if (idx < 1 || idx > commands.size()) {
-                throw new MochaException("Task does not exist in the list! Try a different number");
+                throw new MochaException("Task does not exist in the list! List has " + commands.size() + " items");
             }
 
             if (tmp.equals("mark")) {
@@ -50,6 +55,13 @@ public class Mocha {
                 System.out.println(BR);
                 commands.get(idx - 1).unmark();
                 System.out.println(BR);
+            }
+            if (tmp.equals("delete")) {
+                System.out.println(BR + "\n Alright, I have removed this task:");
+                System.out.println(commands.get(idx - 1));
+                commands.remove(idx - 1);
+                System.out.println(printUpdates() + BR);
+
             }
         } else {
             // templates for string printing
@@ -163,7 +175,6 @@ public class Mocha {
                     System.out.println(e.getMessage());
                     System.out.println(BR);
                 }
-
 
             }
 
