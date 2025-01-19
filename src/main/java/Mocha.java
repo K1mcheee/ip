@@ -2,6 +2,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Encapsulates the functionality of a chatbot
+ *
+ * @author K1mcheee
+ */
 public class Mocha {
     private static final String BR = "____________________________________________________________";
     private static boolean isRunning = true;
