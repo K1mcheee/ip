@@ -145,7 +145,8 @@ public class Mocha {
                     break;
 
                 default:
-                    throw new MochaException("Searching through tasks... \nsorry, it seems I have not learnt this command!");
+                    throw new MochaException("Searching through tasks... \n" +
+                            "sorry, it seems I have not learnt this command!");
             }
         }
     }
