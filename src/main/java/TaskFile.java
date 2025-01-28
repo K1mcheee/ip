@@ -1,35 +1,47 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class TaskFile {
     private String filePath;
+    private Path directory;
 
     public TaskFile(String filePath) {
         this.filePath = filePath;
+        this.directory = Paths.get(filePath).getParent();
     }
 
-    public ArrayList<Task> loadTask(String filePath) throws FileNotFoundException {
-        ArrayList<Task> list = new ArrayList<>();
+    public List<Task> loadTask() throws FileNotFoundException {
+        List<Task> list = new ArrayList<>();
 
-        File f = new File(filePath);
-        Scanner s = new Scanner(f);
-        while (s.hasNextLine()) {
-            Task task = new Task(s.nextLine());
-            list.add(task);
+        File f = new File(this.filePath);
+        // Scanner s = new Scanner(f);
+        try(BufferedReader reader = new BufferedReader(new FileReader(f))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                Task task = new Task(line);
+                list.add(task);
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
-        s.close();
+
         return list;
     }
 
-    public void saveTask(ArrayList<Task> list, String filePath) throws IOException {
-        FileWriter fw = new FileWriter(filePath);
+    public  void saveTask(List<Task> list) throws IOException {
+        File file = new File(this.filePath);
+        file.getParentFile().mkdirs();
+        FileWriter fw = new FileWriter(this.filePath);
 
-        for (Task task : list) {
-            fw.write(task.toString());
+        try (BufferedWriter writer = new BufferedWriter(fw)) {
+            for (Task task : list) {
+                writer.write(task.toString());
+                writer.newLine();
+            }
         }
         
         fw.close();
