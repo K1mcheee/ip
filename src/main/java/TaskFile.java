@@ -29,12 +29,10 @@ public class TaskFile {
 
                 switch (split[1]) {
                 case "todo":
-                    task = new Todo(Todo.handle(line));
+                    task = new Todo(Todo.handle(line,2));
 
                     if (split[0].equals("1")) {
-                        task.mark();
-                    } else {
-                        task.unmark();
+                        task.update();
                     }
 
                     break;
@@ -77,10 +75,24 @@ public class TaskFile {
         try (BufferedWriter writer = new BufferedWriter(fw)) {
             writer.write(tmp + input);
             writer.newLine();
-
         }
         
         fw.close();
+
+    }
+
+    public void updateTask(List<Task> list) throws IOException {
+        File file = new File(this.filePath);
+        file.getParentFile().mkdirs();
+        FileWriter fw = new FileWriter(this.filePath);
+
+            try (BufferedWriter writer = new BufferedWriter(fw)) {
+                for (Task task : list) {
+                    String tmp = task.isDone() ? "1 " : "0 ";
+                    writer.write(tmp + task.handle());
+                    writer.newLine();
+                }
+            }
 
     }
 }

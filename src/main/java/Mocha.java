@@ -90,19 +90,37 @@ public class Mocha {
                 if (tmp.equals("mark")) {
                     System.out.println(BR);
                     commands.get(idx - 1).mark();
-                    // this.taskFile.saveTask(input, true);
+
+                    try {
+                        this.taskFile.updateTask(commands);
+                    } catch (IOException e) {
+                        System.out.println("Could not update: " + e.getMessage());
+                    }
                     System.out.println(BR);
                 }
                 if (tmp.equals("unmark")) {
                     System.out.println(BR);
                     commands.get(idx - 1).unmark();
-                    // this.taskFile.saveTask(input, false);
+
+                    try {
+                        this.taskFile.updateTask(commands);
+                    } catch (IOException e) {
+                        System.out.println("Could not update: " + e.getMessage());
+                    }
+
                     System.out.println(BR);
                 }
                 if (tmp.equals("delete")) {
                     System.out.println(BR + "\n Alright, I have removed this task:");
                     System.out.println(commands.get(idx - 1));
                     commands.remove(idx - 1);
+
+                    try {
+                        this.taskFile.updateTask(commands);
+                    } catch (IOException e) {
+                        System.out.println("Could not update: " + e.getMessage());
+                    }
+
                     System.out.println(printUpdates() + BR);
 
                 }
@@ -128,7 +146,7 @@ public class Mocha {
                             System.out.println("Could not save: " + e.getMessage());
                         }
                         // retrieve task
-                        task = new Todo(Todo.handle(input));
+                        task = new Todo(Todo.handle(input, 1));
                         commands.add(task);
                         System.out.println(BR + printNew() + task + "\n" + printUpdates() + BR);
                         break;

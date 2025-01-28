@@ -22,16 +22,20 @@ public class Todo extends Task{
      * @param input entire String from user
      * @return formatted Task description
      */
-    public static String handle(String input) {
+    public static String handle(String input, int idx) {
         String name = ""; // initialise to unmarked
         String[] split = input.split(" ");
 
         // retrieve task
-        for (int i = 1; i < split.length; i++) {
+        for (int i = idx; i < split.length; i++) {
             name += " " + split[i];
         }
 
         return name;
+    }
+    @Override
+    public String handle() {
+        return String.format("todo%s", super.getDescription());
     }
 
     /**
