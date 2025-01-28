@@ -22,7 +22,43 @@ public class TaskFile {
         try(BufferedReader reader = new BufferedReader(new FileReader(f))) {
             String line;
             while ((line = reader.readLine()) != null) {
+                String[] split = line.split(" ");
+
                 Task task = new Task(line);
+                String description = "";
+
+                switch (split[1]) {
+                case "todo":
+                    task = new Todo(Todo.handle(line));
+
+                    if (split[0].equals("1")) {
+                        task.mark();
+                    } else {
+                        task.unmark();
+                    }
+
+                    break;
+
+                    default: task = new Task(line);
+
+                }
+                /*
+                for (String s : split) {
+
+                    String[] split1 = s.split("");
+
+                    switch (split1[1]) {
+
+                    case "T":
+                        for (int i = 1; i < split.length; i++) {
+                            description += " " + split[i];
+                        }
+                        task = new Todo(description);
+                        break;
+
+                    }
+                }*/
+
                 list.add(task);
             }
         } catch (IOException e) {
@@ -32,16 +68,16 @@ public class TaskFile {
         return list;
     }
 
-    public  void saveTask(List<Task> list) throws IOException {
+    public void saveTask(String input, boolean status) throws IOException {
         File file = new File(this.filePath);
         file.getParentFile().mkdirs();
-        FileWriter fw = new FileWriter(this.filePath);
+        FileWriter fw = new FileWriter(this.filePath, true);
+        String tmp = status ? "1 " : "0 ";
 
         try (BufferedWriter writer = new BufferedWriter(fw)) {
-            for (Task task : list) {
-                writer.write(task.toString());
-                writer.newLine();
-            }
+            writer.write(tmp + input);
+            writer.newLine();
+
         }
         
         fw.close();

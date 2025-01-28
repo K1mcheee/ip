@@ -17,6 +17,24 @@ public class Todo extends Task{
     }
 
     /**
+     * Returns description of Todo tasks
+     *
+     * @param input entire String from user
+     * @return formatted Task description
+     */
+    public static String handle(String input) {
+        String name = ""; // initialise to unmarked
+        String[] split = input.split(" ");
+
+        // retrieve task
+        for (int i = 1; i < split.length; i++) {
+            name += " " + split[i];
+        }
+
+        return name;
+    }
+
+    /**
      * Add an indication to the task to
      * show that it is a Todo task.
      *

@@ -62,11 +62,12 @@ public class Mocha {
 
         // check for bye command to exit
         if (input.toLowerCase().equals("bye")) {
+            /*
             try {
                 this.taskFile.saveTask(this.commands);
             } catch (IOException e) {
                 System.out.println("Sorry, I could not save the task!");
-            }
+            } */
             isRunning = false;
             System.out.println(BR + "\n Bye. Hope to see you again soon! \n" + BR);
 
@@ -89,11 +90,13 @@ public class Mocha {
                 if (tmp.equals("mark")) {
                     System.out.println(BR);
                     commands.get(idx - 1).mark();
+                    // this.taskFile.saveTask(input, true);
                     System.out.println(BR);
                 }
                 if (tmp.equals("unmark")) {
                     System.out.println(BR);
                     commands.get(idx - 1).unmark();
+                    // this.taskFile.saveTask(input, false);
                     System.out.println(BR);
                 }
                 if (tmp.equals("delete")) {
@@ -119,11 +122,13 @@ public class Mocha {
                         if (split.length < 2) {
                             MochaException.emptyDescription("todo have 5 cups of bubble tea");
                         }
-                        // retrieve task
-                        for (int i = 1; i < split.length; i++) {
-                            name += " " + split[i];
+                        try {
+                            this.taskFile.saveTask(input, false);
+                        } catch (IOException e) {
+                            System.out.println("Could not save: " + e.getMessage());
                         }
-                        task = new Todo(name);
+                        // retrieve task
+                        task = new Todo(Todo.handle(input));
                         commands.add(task);
                         System.out.println(BR + printNew() + task + "\n" + printUpdates() + BR);
                         break;
