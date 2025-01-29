@@ -146,7 +146,7 @@ public class Mocha {
                             System.out.println("Could not save: " + e.getMessage());
                         }
                         // retrieve task
-                        task = new Todo(Todo.handle(input, 1));
+                        task = Todo.handle(input, 1);
                         commands.add(task);
                         System.out.println(BR + printNew() + task + "\n" + printUpdates() + BR);
                         break;
@@ -157,18 +157,9 @@ public class Mocha {
                         if (date.length < 2) {
                             throw new MochaException("Remember to add a due date using:\n /by duedate");
                         }
-                        // retrieve task
-                        for (int i = 1; i < cmd.length; i++) {
-                            name += " " + cmd[i];
-                        }
 
-                        // retrieve deadline
-                        String[] byWhen = date[1].split(" ");
-                        for (int i = 1; i < byWhen.length; i++) {
-                            dueDate += " " + byWhen[i];
-                        }
-
-                        task = new Deadline(name, dueDate);
+                        // retrieve task and deadline
+                        task = Deadline.handle(input, 1);
                         commands.add(task);
                         System.out.println(BR + printNew() + task + "\n" + printUpdates() + BR);
                         break;
@@ -180,24 +171,9 @@ public class Mocha {
                         if (date.length < 3) {
                             throw new MochaException("events require a from and to date!\n /from fromDate /to toDate");
                         }
-                        // retrieve task
-                        for (int i = 1; i < cmd.length; i++) {
-                            name += " " + cmd[i];
-                        }
 
-                        // retrieve fromDate
-                        String[] fromDate = date[1].split(" ");
-                        for (int i = 1; i < fromDate.length; i++) {
-                            from += " " + fromDate[i];
-                        }
-
-                        // retrieve toDate
-                        String[] toDate = date[2].split(" ");
-                        for (int i = 1; i < toDate.length; i++) {
-                            to += " " + toDate[i];
-                        }
-
-                        task = new Event(name, from, to);
+                        // retrieve task, from and to date
+                        task = Event.handle(input, 1);
                         commands.add(task);
                         System.out.println(BR + printNew() + task + "\n" + printUpdates() + BR);
                         break;

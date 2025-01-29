@@ -29,33 +29,30 @@ public class TaskFile {
 
                 switch (split[1]) {
                 case "todo":
-                    task = new Todo(Todo.handle(line,2));
+                    task = Todo.handle(line,2);
 
                     if (split[0].equals("1")) {
                         task.update();
                     }
-
                     break;
+                case "deadline":
+                    task = Deadline.handle(line,2);
 
-                    default: task = new Task(line);
-
-                }
-                /*
-                for (String s : split) {
-
-                    String[] split1 = s.split("");
-
-                    switch (split1[1]) {
-
-                    case "T":
-                        for (int i = 1; i < split.length; i++) {
-                            description += " " + split[i];
-                        }
-                        task = new Todo(description);
-                        break;
-
+                    if (split[0].equals("1")) {
+                        task.update();
                     }
-                }*/
+                    break;
+                case "event":
+                    task = Event.handle(line,2);
+
+                    if (split[0].equals("1")) {
+                        task.update();
+                    }
+                    break;
+                default:
+                    task = new Task(line);
+                    break;
+                }
 
                 list.add(task);
             }

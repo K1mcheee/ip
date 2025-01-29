@@ -22,7 +22,7 @@ public class Todo extends Task{
      * @param input entire String from user
      * @return formatted Task description
      */
-    public static String handle(String input, int idx) {
+    public static Todo handle(String input, int idx) {
         String name = ""; // initialise to unmarked
         String[] split = input.split(" ");
 
@@ -31,7 +31,7 @@ public class Todo extends Task{
             name += " " + split[i];
         }
 
-        return name;
+        return new Todo(name);
     }
     @Override
     public String handle() {

@@ -24,6 +24,37 @@ public class Event extends Task{
         this.to = to;
     }
 
+    public static Event handle(String input, int idx) {
+        String name = "";
+        String dueDate = "";
+        String to = "";
+        String from = "";
+
+        String[] split = input.split(" ");
+        String[] date = input.split("/");
+        // retrieves command at 0 idx of array before dueDates
+        String[] cmd = date[0].split(" ");
+
+        // retrieve task
+        for (int i = 1; i < cmd.length; i++) {
+            name += " " + cmd[i];
+        }
+
+        // retrieve fromDate
+        String[] fromDate = date[1].split(" ");
+        for (int i = 1; i < fromDate.length; i++) {
+            from += " " + fromDate[i];
+        }
+
+        // retrieve toDate
+        String[] toDate = date[2].split(" ");
+        for (int i = 1; i < toDate.length; i++) {
+            to += " " + toDate[i];
+        }
+
+        return new Event(name, from, to);
+    }
+
     /**
      * Add an indication to the task to
      * show that it is a Event task.
