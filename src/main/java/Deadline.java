@@ -95,9 +95,20 @@ public class Deadline extends Task{
 
     }
 
+    public String handleDeadline() {
+        if (this.dueDate != null) {
+            return dueDate;
+        } else if (this.deadline != null) {
+            return this.deadline.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        } else {
+            return this.deadlineTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
+        }
+
+    }
+
     @Override
     public String handle() {
-        return String.format("deadline%s /by %s", super.getDescription(), this.printDeadline());
+        return String.format("deadline%s /by %s", super.getDescription(), this.handleDeadline());
     }
 
     /**
