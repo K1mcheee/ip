@@ -19,7 +19,7 @@ public class Deadline extends Task{
         super(name);
         this.dueDate = dueDate;
     }
-    
+
     public static Deadline handle(String input, int idx) {
         String name = "";
         String dueDate = "";
@@ -42,6 +42,11 @@ public class Deadline extends Task{
 
         return new Deadline(name, dueDate);
 
+    }
+
+    @Override
+    public String handle() {
+        return String.format("deadline%s /by %s", super.getDescription(), this.dueDate);
     }
 
     /**

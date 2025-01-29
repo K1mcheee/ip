@@ -36,23 +36,28 @@ public class Event extends Task{
         String[] cmd = date[0].split(" ");
 
         // retrieve task
-        for (int i = 1; i < cmd.length; i++) {
+        for (int i = idx; i < cmd.length; i++) {
             name += " " + cmd[i];
         }
 
         // retrieve fromDate
         String[] fromDate = date[1].split(" ");
-        for (int i = 1; i < fromDate.length; i++) {
+        for (int i = idx; i < fromDate.length; i++) {
             from += " " + fromDate[i];
         }
 
         // retrieve toDate
         String[] toDate = date[2].split(" ");
-        for (int i = 1; i < toDate.length; i++) {
+        for (int i = idx; i < toDate.length; i++) {
             to += " " + toDate[i];
         }
 
         return new Event(name, from, to);
+    }
+
+    @Override
+    public String handle() {
+        return String.format("event%s /from %s /to %s", super.getDescription(), this.from, this.to);
     }
 
     /**
