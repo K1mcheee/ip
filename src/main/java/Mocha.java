@@ -157,6 +157,11 @@ public class Mocha {
                         if (date.length < 2) {
                             throw new MochaException("Remember to add a due date using:\n /by duedate");
                         }
+                        try {
+                            this.taskFile.saveTask(input, false);
+                        } catch (IOException e) {
+                            System.out.println("Could not save: " + e.getMessage());
+                        }
 
                         // retrieve task and deadline
                         task = Deadline.handle(input, 1);
@@ -170,6 +175,11 @@ public class Mocha {
                         }
                         if (date.length < 3) {
                             throw new MochaException("events require a from and to date!\n /from fromDate /to toDate");
+                        }
+                        try {
+                            this.taskFile.saveTask(input, false);
+                        } catch (IOException e) {
+                            System.out.println("Could not save: " + e.getMessage());
                         }
 
                         // retrieve task, from and to date

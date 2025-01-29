@@ -1,3 +1,8 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.regex.Pattern;
+
 /**
  * Encapsulates a Deadline task.
  *
@@ -6,7 +11,8 @@
 public class Deadline extends Task{
     /** due date of the task*/
     private String dueDate;
-
+    private LocalDate deadline;
+    private LocalDateTime deadlineTime;
     /**
      * Constructor for deadline class.
      * Calls parent constructor to set name.
@@ -18,16 +24,36 @@ public class Deadline extends Task{
     public Deadline(String name, String dueDate) {
         super(name);
         this.dueDate = dueDate;
+        this.deadline = null;
+        this.deadlineTime = null;
+    }
+
+    public Deadline(String name, LocalDate deadline) {
+        super(name);
+        this.dueDate = null;
+        this.deadline = deadline;
+        this.deadlineTime = null;
+    }
+
+    public Deadline(String name, LocalDateTime deadlineTime) {
+        super(name);
+        this.dueDate = null;
+        this.deadline = null;
+        this.deadlineTime = deadlineTime;
     }
 
     public static Deadline handle(String input, int idx) {
         String name = "";
         String dueDate = "";
 
-        String[] split = input.split(" ");
         String[] date = input.split("/");
-        // retrieves command at 0 idx of array before dueDates
+
+        // retrieves command and description at 0 idx of array before dueDates
         String[] cmd = date[0].split(" ");
+
+        Pattern dateOnly = Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
+        Pattern dateAndTime = Pattern.compile("\\d{4}-\\d{2}-\\d{2} \\d{4}");
+        DateTimeFormatter dTFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
         // retrieve task
         for (int i = idx; i < cmd.length; i++) {
@@ -35,18 +61,43 @@ public class Deadline extends Task{
         }
 
         // retrieve deadline
+        String[] inputDate = date[1].split(" ");
+
+        try {
+            if (inputDate.length == 2 && dateOnly.matcher(inputDate[1]).matches()) {
+                return new Deadline(name, LocalDate.parse(inputDate[1]));
+            } else if (inputDate.length > 2 &&
+                    dateAndTime.matcher(inputDate[1] + " " + inputDate[2]).matches()) {
+                return new Deadline(name, LocalDateTime.parse(inputDate[1] + " " + inputDate[2], dTFormat));
+            } else {
+                MochaException.invalidDateTime();
+            }
+        } catch (MochaException e) {
+            System.out.println(e.getMessage());
+        }
+
         String[] byWhen = date[1].split(" ");
         for (int i = idx; i < byWhen.length; i++) {
             dueDate += " " + byWhen[i];
         }
-
         return new Deadline(name, dueDate);
+
+    }
+
+    public String printDeadline() {
+        if (this.dueDate != null) {
+            return dueDate;
+        } else if (this.deadline != null) {
+            return this.deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+        } else {
+            return this.deadlineTime.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm"));
+        }
 
     }
 
     @Override
     public String handle() {
-        return String.format("deadline%s /by %s", super.getDescription(), this.dueDate);
+        return String.format("deadline%s /by %s", super.getDescription(), this.printDeadline());
     }
 
     /**
@@ -57,6 +108,6 @@ public class Deadline extends Task{
      */
     @Override
     public String toString() {
-        return String.format("[D]%s (by:%s)" , super.toString(), this.dueDate);
+        return String.format("[D]%s (by:%s)" , super.toString(), this.printDeadline());
     }
 }

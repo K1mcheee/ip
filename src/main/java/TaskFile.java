@@ -24,8 +24,7 @@ public class TaskFile {
             while ((line = reader.readLine()) != null) {
                 String[] split = line.split(" ");
 
-                Task task = new Task(line);
-                String description = "";
+                Task task;
 
                 switch (split[1]) {
                 case "todo":
