@@ -63,6 +63,8 @@ public class TaskFile {
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
+        } catch (MochaException e) {
+            throw new RuntimeException(e);
         }
 
         return list;
