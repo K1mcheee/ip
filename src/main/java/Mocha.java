@@ -19,15 +19,17 @@ public class Mocha {
     private static Task task = null;
 
     private TaskFile taskFile; //storage
-    private List<Task> commands = new ArrayList<>(); //tasklist
+    //private List<Task> commands = new ArrayList<>(); //tasklist
+
 
     private Ui ui;
+    private TaskList taskList;
 
     public Mocha() {
         this.ui = new Ui();
         this.taskFile = new TaskFile("data/mocha.txt"); //storage
         try {
-            this.commands = this.taskFile.loadTask(); //tasklist
+            this.taskList = new TaskList(this.taskFile.loadTask()); //tasklist
         } catch (FileNotFoundException e) {
             ui.printError("Error could not load file: " + e.getMessage());
         }
@@ -66,8 +68,7 @@ public class Mocha {
 
         }  else if (input.toLowerCase().equals("due")) {
             ui.br();
-            for (Task task : this.commands) {
-
+            for (int i = 0; i < taskList.size(); i++) {
                 // checks for tasks with LocalDate
                 if (!task.hasTime() && !(task instanceof Todo)) {
                     // print task if due today
@@ -107,23 +108,23 @@ public class Mocha {
         }   else if (input.toLowerCase().equals("list")) {
             // check for command to print list
             ui.br();
-            ui.printTaskList(this.commands);
+            ui.printTaskList(this.taskList);
             ui.br();
         } else {
             // check for keywords mark and unmark
             if (tmp.equals("mark") || tmp.equals("unmark") || tmp.equals("delete")) {
                 int idx = Integer.parseInt(split[1]);
 
-                if (idx < 1 || idx > commands.size()) {
-                    throw new MochaException("Task does not exist in the list! List has " + commands.size() + " items");
+                if (idx < 1 || idx > taskList.size()) {
+                    throw new MochaException("Task does not exist in the list! List has " + taskList.size() + " items");
                 }
 
                 if (tmp.equals("mark")) {
                     ui.br();
-                    commands.get(idx - 1).mark();
+                    taskList.get(idx - 1).mark();
 
                     try {
-                        this.taskFile.updateTask(commands);
+                        this.taskFile.updateTask(taskList);
                     } catch (IOException e) {
                         ui.printError("Could not update: " + e.getMessage());
                     }
@@ -131,10 +132,10 @@ public class Mocha {
                 }
                 if (tmp.equals("unmark")) {
                     ui.br();
-                    commands.get(idx - 1).unmark();
+                    taskList.get(idx - 1).unmark();
 
                     try {
-                        this.taskFile.updateTask(commands);
+                        this.taskFile.updateTask(taskList);
                     } catch (IOException e) {
                         ui.printError("Could not update: " + e.getMessage());
                     }
@@ -142,16 +143,16 @@ public class Mocha {
                 }
                 if (tmp.equals("delete")) {
                     ui.br();
-                    ui.delete(commands.get(idx - 1));
-                    commands.remove(idx - 1);
+                    ui.delete(taskList.get(idx - 1));
+                    taskList.remove(idx - 1);
 
                     try {
-                        this.taskFile.updateTask(commands);
+                        this.taskFile.updateTask(taskList);
                     } catch (IOException e) {
                         ui.printError("Could not update: " + e.getMessage());
                     }
 
-                    ui.printUpdates(this.commands.size());
+                    ui.printUpdates(this.taskList.size());
                     ui.br();
 
                 }
@@ -167,8 +168,8 @@ public class Mocha {
                             // retrieve task
                             task = Todo.handle(input, 1);
                             this.taskFile.saveTask(input, false);
-                            commands.add(task);
-                            ui.printNewTask(task, commands.size());
+                            taskList.add(task);
+                            ui.printNewTask(task, taskList.size());
                         } catch (IOException e) {
                             ui.printError("Could not save: " + e.getMessage());
                         }  catch (DateTimeParseException e) {
@@ -186,8 +187,8 @@ public class Mocha {
                             // retrieve task and deadline
                             task = Deadline.handle(input, 1);
                             this.taskFile.saveTask(input, false);
-                            commands.add(task);
-                            ui.printNewTask(task, commands.size());
+                            taskList.add(task);
+                            ui.printNewTask(task, taskList.size());
 
                         } catch (IOException e) {
                             ui.printError("Could not save: " + e.getMessage());
@@ -209,8 +210,8 @@ public class Mocha {
                             // retrieve task, from and to date
                             task = Event.handle(input, 1);
                             this.taskFile.saveTask(input, false);
-                            commands.add(task);
-                            ui.printNewTask(task, commands.size());
+                            taskList.add(task);
+                            ui.printNewTask(task, taskList.size());
                         } catch (IOException e) {
                             ui.printError("Could not save: " + e.getMessage());
                             ui.br();
@@ -238,12 +239,8 @@ public class Mocha {
             String input = scanner.nextLine(); //parser
 
             try {
-                validateInput(input); //parser
+                Parser.validateInput(input); //parser
             } catch (MochaException e) {
-                    /*
-                    System.out.println(BR);
-                    System.out.println(e.getMessage()); // uui
-                    System.out.println(BR);*/
                 this.ui.printError(e.getMessage());
             }
 
@@ -253,8 +250,6 @@ public class Mocha {
     public static void main(String[] args) {
 
             new Mocha().run();
-            //System.out.println(BR + "\n Hello! I'm Mocha"); //ui
-            //System.out.println(" What can I do for you? \n" + BR); //ui
 
     }
 }
