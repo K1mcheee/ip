@@ -43,20 +43,27 @@ public class Parser {
             c = new ListCommand();
         } else {
             // check for keywords mark and unmark
-            if (tmp.equals("mark") || tmp.equals("unmark") || tmp.equals("delete")) {
+            if (tmp.equals("mark") || tmp.equals("unmark")
+                    || tmp.equals("delete") || tmp.equals("find")) {
                 if (split.length < 2) {
                     throw new MochaException("Specify the task number after the command!");
                 }
-                int idx = Integer.parseInt(split[1]);
 
-                if (tmp.equals("mark")) {
-                    c = new MarkCommand(idx);
-                }
-                if (tmp.equals("unmark")) {
-                    c = new UnmarkCommand(idx);
-                }
-                if (tmp.equals("delete")) {
-                    c = new DeleteCommand(idx);
+                if (tmp.equals("find")) {
+                    String keyword = split[1];
+                    c = new FindCommand(keyword);
+                } else {
+                    int idx = Integer.parseInt(split[1]);
+
+                    if (tmp.equals("mark")) {
+                        c = new MarkCommand(idx);
+                    }
+                    if (tmp.equals("unmark")) {
+                        c = new UnmarkCommand(idx);
+                    }
+                    if (tmp.equals("delete")) {
+                        c = new DeleteCommand(idx);
+                    }
                 }
             } else {
                 // switch case to respond to input
