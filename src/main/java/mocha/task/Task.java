@@ -57,6 +57,10 @@ public class Task {
         System.out.println(this.toString());
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     public String printFromDate() {
         return "This task has no start date!";
     }
