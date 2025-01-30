@@ -10,9 +10,10 @@ import java.util.regex.Pattern;
  */
 public class Deadline extends Task{
     /** due date of the task*/
-    private String dueDate;
-    private LocalDate deadline;
-    private LocalDateTime deadlineTime;
+    private final String dueDate;
+    private final LocalDate deadline;
+    private final LocalDateTime deadlineTime;
+    private boolean hasTime = false;
     /**
      * Constructor for deadline class.
      * Calls parent constructor to set name.
@@ -68,7 +69,10 @@ public class Deadline extends Task{
                 return new Deadline(name, LocalDate.parse(inputDate[1]));
             } else if (inputDate.length > 2 &&
                     dateAndTime.matcher(inputDate[1] + " " + inputDate[2]).matches()) {
-                return new Deadline(name, LocalDateTime.parse(inputDate[1] + " " + inputDate[2], dTFormat));
+                Deadline task = new Deadline(name,
+                        LocalDateTime.parse(inputDate[1] + " " + inputDate[2], dTFormat));
+                task.hasTime = true;
+                return task;
             } else {
                 MochaException.invalidDateTime();
             }
@@ -84,7 +88,13 @@ public class Deadline extends Task{
 
     }
 
-    public String printDeadline() {
+    @Override
+    public boolean hasTime() {
+        return this.hasTime;
+    }
+
+    @Override
+    public String printDueDate() {
         if (this.dueDate != null) {
             return dueDate;
         } else if (this.deadline != null) {
@@ -95,7 +105,8 @@ public class Deadline extends Task{
 
     }
 
-    public String handleDeadline() {
+    @Override
+    public String handleDueDate() {
         if (this.dueDate != null) {
             return dueDate;
         } else if (this.deadline != null) {
@@ -108,7 +119,7 @@ public class Deadline extends Task{
 
     @Override
     public String handle() {
-        return String.format("deadline%s /by %s", super.getDescription(), this.handleDeadline());
+        return String.format("deadline%s /by %s", super.getDescription(), this.handleDueDate());
     }
 
     /**
@@ -119,6 +130,6 @@ public class Deadline extends Task{
      */
     @Override
     public String toString() {
-        return String.format("[D]%s (by:%s)" , super.toString(), this.printDeadline());
+        return String.format("[D]%s (by:%s)" , super.toString(), this.printDueDate());
     }
 }

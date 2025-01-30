@@ -55,6 +55,25 @@ public class Task {
         System.out.println(this.toString());
     }
 
+    public String printFromDate() {
+        return "This task has no start date!";
+    }
+
+    public String printDueDate() {
+        return "This task has no due date!";
+    }
+
+    public String handleFromDate() {
+        return "This task has no start date!";
+    }
+
+    public String handleDueDate() {
+        return "This task has no due date!";
+    }
+
+    public boolean hasTime() {
+        return false;
+    }
     /**
      * Check status of task. Returns corresponding icon.
      *

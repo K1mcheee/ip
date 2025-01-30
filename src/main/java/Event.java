@@ -20,6 +20,8 @@ public class Event extends Task{
     private final LocalDateTime fromTime;
     private final LocalDateTime toTime;
 
+    private boolean hasTime = false;
+
 
     /**
      * Constructor for Event task.
@@ -92,8 +94,10 @@ public class Event extends Task{
                     dateAndTime.matcher(inputFrom[1] + " " + inputFrom[2]).matches()
                     && inputTo.length > 2 && dateAndTime.matcher(inputTo[1] + " " + inputTo[2]).matches()) {
 
-                return new Event(name, LocalDateTime.parse(inputFrom[1] + " " + inputFrom[2], dTFormat),
+                Event task = new Event(name, LocalDateTime.parse(inputFrom[1] + " " + inputFrom[2], dTFormat),
                         LocalDateTime.parse(inputTo[1] + " " + inputTo[2], dTFormat));
+                task.hasTime = true;
+                return task;
 
             } else {
                 MochaException.invalidDateTime();
@@ -113,6 +117,12 @@ public class Event extends Task{
         return new Event(name, from, to);
     }
 
+    @Override
+    public boolean hasTime() {
+        return this.hasTime;
+    }
+
+    @Override
     public String printFromDate() {
         if (this.from != null) {
             return from;
@@ -123,7 +133,8 @@ public class Event extends Task{
         }
     }
 
-    public String printToDate() {
+    @Override
+    public String printDueDate() {
         if (this.to != null) {
             return from;
         } else if (this.toDate != null) {
@@ -133,6 +144,7 @@ public class Event extends Task{
         }
     }
 
+    @Override
     public String handleFromDate() {
         if (this.from != null) {
             return from;
@@ -143,7 +155,8 @@ public class Event extends Task{
         }
     }
 
-    public String handleToDate() {
+    @Override
+    public String handleDueDate() {
         if (this.to != null) {
             return from;
         } else if (this.toDate != null) {
@@ -156,7 +169,7 @@ public class Event extends Task{
     @Override
     public String handle() {
         return String.format("event%s /from %s /to %s", super.getDescription(),
-                this.handleFromDate(), this.handleToDate());
+                this.handleFromDate(), this.handleDueDate());
     }
 
     /**
@@ -168,6 +181,6 @@ public class Event extends Task{
     @Override
     public String toString() {
         return String.format("[E]%s (from:%s to:%s)", super.toString(),
-                this.printFromDate(), this.printToDate());
+                this.printFromDate(), this.printDueDate());
     }
 }
