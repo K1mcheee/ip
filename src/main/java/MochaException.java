@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+
 /**
  * Encapsulates a custom exception thrown that
  * deals with specific input errors to Mocha
@@ -27,5 +29,9 @@ public class MochaException extends Exception {
      */
     public static void emptyDescription(String task) throws MochaException{
         throw new MochaException("Task requires a description!\nFor example...\n" + task);
+    }
+
+    public static void invalidDateTime() throws MochaException{
+        throw new MochaException("Invalid date/time! Input as yyyy-mm-dd for date and tttt for time!");
     }
 }

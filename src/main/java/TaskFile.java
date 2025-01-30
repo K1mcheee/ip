@@ -22,7 +22,37 @@ public class TaskFile {
         try(BufferedReader reader = new BufferedReader(new FileReader(f))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                Task task = new Task(line);
+                String[] split = line.split(" ");
+
+                Task task;
+
+                switch (split[1]) {
+                case "todo":
+                    task = Todo.handle(line,2);
+
+                    if (split[0].equals("1")) {
+                        task.update();
+                    }
+                    break;
+                case "deadline":
+                    task = Deadline.handle(line,2);
+
+                    if (split[0].equals("1")) {
+                        task.update();
+                    }
+                    break;
+                case "event":
+                    task = Event.handle(line,2);
+
+                    if (split[0].equals("1")) {
+                        task.update();
+                    }
+                    break;
+                default:
+                    task = new Task(line);
+                    break;
+                }
+
                 list.add(task);
             }
         } catch (IOException e) {
@@ -32,19 +62,33 @@ public class TaskFile {
         return list;
     }
 
-    public  void saveTask(List<Task> list) throws IOException {
+    public void saveTask(String input, boolean status) throws IOException {
+        File file = new File(this.filePath);
+        file.getParentFile().mkdirs();
+        FileWriter fw = new FileWriter(this.filePath, true);
+        String tmp = status ? "1 " : "0 ";
+
+        try (BufferedWriter writer = new BufferedWriter(fw)) {
+            writer.write(tmp + input);
+            writer.newLine();
+        }
+        
+        fw.close();
+
+    }
+
+    public void updateTask(List<Task> list) throws IOException {
         File file = new File(this.filePath);
         file.getParentFile().mkdirs();
         FileWriter fw = new FileWriter(this.filePath);
 
-        try (BufferedWriter writer = new BufferedWriter(fw)) {
-            for (Task task : list) {
-                writer.write(task.toString());
-                writer.newLine();
+            try (BufferedWriter writer = new BufferedWriter(fw)) {
+                for (Task task : list) {
+                    String tmp = task.isDone() ? "1 " : "0 ";
+                    writer.write(tmp + task.handle());
+                    writer.newLine();
+                }
             }
-        }
-        
-        fw.close();
 
     }
 }

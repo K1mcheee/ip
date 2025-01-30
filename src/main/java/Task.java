@@ -10,6 +10,9 @@ public class Task {
     /** status of task */
     private boolean isDone = false;
 
+    public boolean isDone() {
+        return this.isDone;
+    }
     /**
      * Constructor for the task
      * to initialise the name.
@@ -18,6 +21,18 @@ public class Task {
      */
     public Task(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return this.name;
+    }
+
+    public String handle() {
+        return this.name;
+    }
+
+    public void update() {
+        this.isDone = true;
     }
 
     /**
@@ -40,6 +55,25 @@ public class Task {
         System.out.println(this.toString());
     }
 
+    public String printFromDate() {
+        return "This task has no start date!";
+    }
+
+    public String printDueDate() {
+        return "This task has no due date!";
+    }
+
+    public String handleFromDate() {
+        return "This task has no start date!";
+    }
+
+    public String handleDueDate() {
+        return "This task has no due date!";
+    }
+
+    public boolean hasTime() {
+        return false;
+    }
     /**
      * Check status of task. Returns corresponding icon.
      *
