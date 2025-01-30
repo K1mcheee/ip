@@ -47,7 +47,7 @@ public class Deadline extends Task {
         this.deadlineTime = deadlineTime;
     }
 
-    public static Deadline handle(String input, int idx) {
+    public static Deadline handle(String input, int idx) throws MochaException {
         String name = "";
         String dueDate = "";
 
@@ -68,27 +68,19 @@ public class Deadline extends Task {
         // retrieve deadline
         String[] inputDate = date[1].split(" ");
 
-        try {
-            if (inputDate.length == 2 && dateOnly.matcher(inputDate[1]).matches()) {
-                return new Deadline(name, LocalDate.parse(inputDate[1]));
-            } else if (inputDate.length > 2 &&
-                    dateAndTime.matcher(inputDate[1] + " " + inputDate[2]).matches()) {
-                Deadline task = new Deadline(name,
-                        LocalDateTime.parse(inputDate[1] + " " + inputDate[2], dTFormat));
-                task.hasTime = true;
-                return task;
-            } else {
-                MochaException.invalidDateTime();
-            }
-        } catch (MochaException e) {
-            System.out.println(e.getMessage());
+
+        if (inputDate.length == 2 && dateOnly.matcher(inputDate[1]).matches()) {
+            return new Deadline(name, LocalDate.parse(inputDate[1]));
+        } else if (inputDate.length > 2 &&
+                dateAndTime.matcher(inputDate[1] + " " + inputDate[2]).matches()) {
+            Deadline task = new Deadline(name,
+                    LocalDateTime.parse(inputDate[1] + " " + inputDate[2], dTFormat));
+            task.hasTime = true;
+            return task;
+        } else {
+            throw new MochaException("Invalid date/time! Input as yyyy-mm-dd for date and HHmm for time!");
         }
 
-        String[] byWhen = date[1].split(" ");
-        for (int i = idx; i < byWhen.length; i++) {
-            dueDate += " " + byWhen[i];
-        }
-        return new Deadline(name, dueDate);
 
     }
 
