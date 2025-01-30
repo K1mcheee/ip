@@ -77,13 +77,14 @@ public class TaskFile {
 
     }
 
-    public void updateTask(List<Task> list) throws IOException {
+    public void updateTask(TaskList list) throws IOException {
         File file = new File(this.filePath);
         file.getParentFile().mkdirs();
         FileWriter fw = new FileWriter(this.filePath);
 
             try (BufferedWriter writer = new BufferedWriter(fw)) {
-                for (Task task : list) {
+                for (int i = 0; i < list.size(); i++) {
+                    Task task = list.get(i);
                     String tmp = task.isDone() ? "1 " : "0 ";
                     writer.write(tmp + task.handle());
                     writer.newLine();

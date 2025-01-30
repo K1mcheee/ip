@@ -15,273 +15,38 @@ import java.util.Scanner;
  * @author K1mcheee
  */
 public class Mocha {
-    private static final String BR = "____________________________________________________________";
     private static boolean isRunning = true;
-    //private static List<Task> commands = new ArrayList<>();
-    private static Task task = null;
 
-    private TaskFile taskFile;
-    private List<Task> commands = new ArrayList<>();
-    public Mocha() {
+    private TaskFile taskFile; //storage
+    private Ui ui;
+    private TaskList taskList;
 
-        this.taskFile = new TaskFile("data/mocha.txt");
+    public Mocha(String filePath) {
+        this.ui = new Ui();
+        this.taskFile = new TaskFile(filePath); //storage
         try {
-            this.commands = this.taskFile.loadTask();
+            this.taskList = new TaskList(this.taskFile.loadTask()); //tasklist
         } catch (FileNotFoundException e) {
-            System.out.println("Error could not load file: " + e.getMessage());
+            ui.printError("Error could not load file: " + e.getMessage());
         }
-
-
     }
 
-    /**
-     * Helper function to print when task is added
-     * @return Standard reply that task is updated
-     */
-    private static String printNew() {
-        return "\n Got it. I've added this task: \n";
-    }
-
-    /**
-     * Helper function to print whenever list is updated
-     * @return  number of taasks in list
-     */
-    private String printUpdates() {
-        return String.format(" Now you have %d tasks in the list. \n", this.commands.size());
-    }
-
-    private LocalDate parseDate(String date) {
-        return LocalDate.parse(date);
-    }
-
-    private LocalDate parseDateTime(String date) {
-        return LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"))
-                .toLocalDate();
-    }
-
-    /**
-     * Parse and validate the input entered by user and
-     * responds accordingly. If user enters invalid input,
-     * corresponding advice on the error is printed.
-     *
-     * @param input String entered by user.
-     * @throws MochaException if user enters invalid commands.
-     */
-    private void validateInput(String input) throws MochaException {
-        // parse input
-        String[] split = input.split(" ");
-        String[] date = input.split("/");
-        String tmp = split[0].toLowerCase();
-
-        // check for bye command to exit
-        if (input.toLowerCase().equals("bye")) {
-            /*
+    public void run() {
+        ui.welcome();
+        while (isRunning) {
+            String input = ui.read(); //parser
             try {
-                this.taskFile.saveTask(this.commands);
-            } catch (IOException e) {
-                System.out.println("Sorry, I could not save the task!");
-            } */
-            isRunning = false;
-            System.out.println(BR + "\n Bye. Hope to see you again soon! \n" + BR);
-
-        }  else if (input.toLowerCase().equals("due")) {
-            // prints tasks that are due/currently on
-            System.out.println(BR);
-            for (Task task : this.commands) {
-
-                // checks for tasks with LocalDate
-                if (!task.hasTime()) {
-                    // print task if due today
-                    if (parseDate(task.handleDueDate()).equals(LocalDate.now())) {
-                        System.out.println(task);
-                    }
-
-                    // if event, check if date today is within from and to dates
-                    if (task instanceof Event e) {
-                        if (((parseDate(e.handleFromDate()).isBefore(LocalDate.now()))
-                                || ((parseDate(e.handleFromDate()).equals(LocalDate.now()))))
-                                && (parseDate(e.handleDueDate()).isAfter(LocalDate.now())
-                                || ((parseDate(e.handleFromDate()).equals(LocalDate.now()))))) {
-                            System.out.println(e);
-                        }
-                    }
-                }
-
-                // handles tasks with time
-                if (task.hasTime()) {
-                    if (parseDateTime(task.handleDueDate()).equals((LocalDate.now()))) {
-                        System.out.println(task);
-                    }
-
-                    if (task instanceof Event e) {
-                        if (parseDateTime(e.handleFromDate()).isBefore((LocalDate.now()))
-                                || parseDateTime(e.handleFromDate()).equals((LocalDate.now()))
-                                && (parseDateTime(e.handleDueDate()).isAfter((LocalDate.now()))
-                                || parseDateTime(e.handleDueDate()).equals((LocalDate.now())))) {
-                            System.out.println(e);
-                        }
-                    }
-                }
-
-            }
-            System.out.println(BR);
-
-        }   else if (input.toLowerCase().equals("list")) {
-            // check for command to print list
-            System.out.println(BR);
-            for (int i = 1; i <= this.commands.size(); i++) {
-                System.out.println(i + "." + this.commands.get(i - 1));
-            }
-            System.out.println(BR);
-        } else {
-            // check for keywords mark and unmark
-            if (tmp.equals("mark") || tmp.equals("unmark") || tmp.equals("delete")) {
-                int idx = Integer.parseInt(split[1]);
-
-                if (idx < 1 || idx > commands.size()) {
-                    throw new MochaException("Task does not exist in the list! List has " + commands.size() + " items");
-                }
-
-                if (tmp.equals("mark")) {
-                    System.out.println(BR);
-                    commands.get(idx - 1).mark();
-
-                    try {
-                        this.taskFile.updateTask(commands);
-                    } catch (IOException e) {
-                        System.out.println("Could not update: " + e.getMessage());
-                    }
-                    System.out.println(BR);
-                }
-                if (tmp.equals("unmark")) {
-                    System.out.println(BR);
-                    commands.get(idx - 1).unmark();
-
-                    try {
-                        this.taskFile.updateTask(commands);
-                    } catch (IOException e) {
-                        System.out.println("Could not update: " + e.getMessage());
-                    }
-
-                    System.out.println(BR);
-                }
-                if (tmp.equals("delete")) {
-                    System.out.println(BR + "\n Alright, I have removed this task:");
-                    System.out.println(commands.get(idx - 1));
-                    commands.remove(idx - 1);
-
-                    try {
-                        this.taskFile.updateTask(commands);
-                    } catch (IOException e) {
-                        System.out.println("Could not update: " + e.getMessage());
-                    }
-
-                    System.out.println(printUpdates() + BR);
-
-                }
-            } else {
-                // templates for string printing
-                String name = "";
-                String dueDate = "";
-                String to = "";
-                String from = "";
-
-                // retrieves command at 0 idx of array before dueDates
-                String[] cmd = date[0].split(" ");
-
-                // switch case to respond to input
-                switch (tmp) {
-                    case "todo":
-                        if (split.length < 2) {
-                            MochaException.emptyDescription("todo have 5 cups of bubble tea");
-                        }
-                        try {
-                            // retrieve task
-                            task = Todo.handle(input, 1);
-                            this.taskFile.saveTask(input, false);
-                            commands.add(task);
-                            System.out.println(BR + printNew() + task + "\n" + printUpdates() + BR);
-                        } catch (IOException e) {
-                            System.out.println("Could not save: " + e.getMessage());
-                        }
-                        break;
-                    case "deadline":
-                        if (split.length < 2) {
-                            MochaException.emptyDescription("deadline finish the bubble tea /by today");
-                        }
-                        if (date.length < 2) {
-                            throw new MochaException("Remember to add a due date using:\n /by duedate");
-                        }
-                        try {
-                            // retrieve task and deadline
-                            task = Deadline.handle(input, 1);
-                            this.taskFile.saveTask(input, false);
-                            commands.add(task);
-                            System.out.println(BR + printNew() + task + "\n" + printUpdates() + BR);
-
-                        } catch (IOException e) {
-                            System.out.println("Could not save: " + e.getMessage());
-                            System.out.println(BR);
-                        } catch (DateTimeParseException e) {
-                            System.out.println("Invalid date: " + e.getMessage());
-                            System.out.println(BR);
-                        }
-                        break;
-
-                    case "event":
-                        if (split.length < 2) {
-                            MochaException.emptyDescription("event Try all bubble teas /from Monday /to Friday");
-                        }
-                        if (date.length < 3) {
-                            throw new MochaException("events require a from and to date!\n /from fromDate /to toDate");
-                        }
-                        try {
-                            // retrieve task, from and to date
-                            task = Event.handle(input, 1);
-                            this.taskFile.saveTask(input, false);
-                            commands.add(task);
-                            System.out.println(BR + printNew() + task + "\n" + printUpdates() + BR);
-                        } catch (IOException e) {
-                            System.out.println("Could not save: " + e.getMessage());
-                            System.out.println(BR);
-                        } catch (DateTimeParseException e) {
-                            System.out.println("Invalid date: " + e.getMessage());
-                            System.out.println(BR);
-                        }
-                        break;
-
-                    default:
-                        throw new MochaException("Searching through tasks... \n" +
-                                "sorry, it seems I have not learnt this command!");
-                }
+                Command c = Parser.validateInput(input); //parser
+                c.execute(this.taskList, this.ui, this.taskFile);
+                isRunning = c.isRunning();
+            } catch (MochaException e) {
+                this.ui.printError(e.getMessage());
             }
 
         }
-
     }
 
     public static void main(String[] args) {
-
-            Mocha mocha = new Mocha();
-            System.out.println(BR + "\n Hello! I'm Mocha");
-            System.out.println(" What can I do for you? \n" + BR);
-
-            Scanner scanner = new Scanner(System.in);
-
-            while (isRunning) {
-                String input = scanner.nextLine();
-
-                try {
-                    mocha.validateInput(input);
-                } catch (MochaException e) {
-                    System.out.println(BR);
-                    System.out.println(e.getMessage());
-                    System.out.println(BR);
-                }
-
-            }
-
-
-
+        new Mocha("data/mocha.txt").run();
     }
 }
