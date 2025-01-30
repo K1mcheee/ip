@@ -7,13 +7,33 @@ import mocha.Ui;
 
 import java.io.IOException;
 
+/**
+ * Encapsulates a Delete command.
+ *
+ * @author K1mcheee
+ */
 public class DeleteCommand extends Command {
+    /**Indicates index of task*/
     private int idx;
 
+    /**
+     * Initializes Delete Command with index.
+     *
+     * @param idx index of task to be deleted.
+     */
     public DeleteCommand(int idx) {
         this.idx = idx;
     }
 
+    /**
+     * Runs the logic of the specific command.
+     * For Delete, removes task at specified index
+     * from the list.
+     *
+     * @param tasks List of current tasks.
+     * @param ui Interface for users to interact with.
+     * @param storage Stores updates and changes to drive.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, TaskFile storage) {
         ui.br();
