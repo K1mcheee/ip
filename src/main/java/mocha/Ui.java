@@ -83,8 +83,7 @@ public class Ui {
     public void printNewTask(Task task, int len) {
         System.out.println(BR + "\n" + this.printNew() + "\n" + task
                 + "\n" + this.printUpdates(len) + "\n" + BR);
-
-
+        
     }
 
 }

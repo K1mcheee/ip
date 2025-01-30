@@ -19,6 +19,7 @@ public class Mocha {
     public Mocha(String filePath) {
         this.ui = new Ui();
         this.taskFile = new TaskFile(filePath); //storage
+
         try {
             this.taskList = new TaskList(this.taskFile.loadTask()); //tasklist
         } catch (FileNotFoundException e) {
