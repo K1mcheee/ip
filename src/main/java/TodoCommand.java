@@ -10,6 +10,7 @@ public class TodoCommand extends Command{
 
     @Override
     public void execute(TaskList tasks, Ui ui, TaskFile storage) {
+
         try {
             // retrieve task
             Task task = Todo.handle(this.input, 1);

@@ -1,8 +1,11 @@
 import java.util.List;
+import java.util.Scanner;
 
 public class Ui {
     /**Breakline to separate texts*/
     private static final String BR = "____________________________________________________________";
+    private Scanner scanner = new Scanner(System.in);
+
 
     /**
      * Returns the dividing line between texts.
@@ -19,6 +22,10 @@ public class Ui {
     public void welcome() {
         System.out.println(BR + "\n Hello! I'm Mocha");
         System.out.println(" What can I do for you? \n" + BR);
+    }
+
+    public String read() {
+        return scanner.nextLine();
     }
 
     /**
