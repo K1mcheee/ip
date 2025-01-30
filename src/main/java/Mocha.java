@@ -63,8 +63,7 @@ public class Mocha {
 
         // check for bye command to exit
         if (input.toLowerCase().equals("bye")) {
-            isRunning = false;
-            ui.goodBye();
+            new ByeCommand();
 
         }  else if (input.toLowerCase().equals("due")) {
             ui.br();
@@ -107,9 +106,7 @@ public class Mocha {
             ui.br();
         }   else if (input.toLowerCase().equals("list")) {
             // check for command to print list
-            ui.br();
-            ui.printTaskList(this.taskList);
-            ui.br();
+            new ListCommand();
         } else {
             // check for keywords mark and unmark
             if (tmp.equals("mark") || tmp.equals("unmark") || tmp.equals("delete")) {

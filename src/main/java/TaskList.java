@@ -3,8 +3,11 @@ import java.util.List;
 
 public class TaskList {
     /**List of tasks*/
-    private List<Task> commands = new ArrayList<>(); //tasklist
+    private List<Task> commands; //tasklist
 
+    public TaskList(ArrayList<Task> commands) {
+        this.commands = commands;
+    }
     /**
      * Constructor to initialize the list of tasks.
      *
