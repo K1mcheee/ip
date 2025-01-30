@@ -1,3 +1,7 @@
+package mocha.task;
+
+import mocha.MochaException;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -8,7 +12,7 @@ import java.util.regex.Pattern;
  *
  * @author K1mcheee
  */
-public class Event extends Task{
+public class Event extends Task {
     /** Event start date */
     private final String from;
     /** Event end date */

@@ -1,9 +1,15 @@
+package mocha;
+
+import mocha.task.Deadline;
+import mocha.task.Event;
+import mocha.task.Task;
+import mocha.task.Todo;
+
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class TaskFile {
     private String filePath;

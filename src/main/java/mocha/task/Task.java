@@ -1,3 +1,5 @@
+package mocha.task;
+
 /**
  * Encapsulates a task that a user can
  * add to the list of the bot.

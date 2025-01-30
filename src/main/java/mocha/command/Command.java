@@ -1,3 +1,9 @@
+package mocha.command;
+
+import mocha.TaskFile;
+import mocha.TaskList;
+import mocha.Ui;
+
 public abstract class Command {
     private boolean isRunning = true;
 
