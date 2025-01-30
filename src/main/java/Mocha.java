@@ -66,44 +66,8 @@ public class Mocha {
             new ByeCommand();
 
         }  else if (input.toLowerCase().equals("due")) {
-            ui.br();
-            for (int i = 0; i < taskList.size(); i++) {
-                // checks for tasks with LocalDate
-                if (!task.hasTime() && !(task instanceof Todo)) {
-                    // print task if due today
-                    if (parseDate(task.handleDueDate()).equals(LocalDate.now())) {
-                        ui.printTask(task);
-                    }
-
-                    // if event, check if date today is within from and to dates
-                    if (task instanceof Event e) {
-                        if (((parseDate(e.handleFromDate()).isBefore(LocalDate.now()))
-                                || ((parseDate(e.handleFromDate()).equals(LocalDate.now()))))
-                                && (parseDate(e.handleDueDate()).isAfter(LocalDate.now())
-                                || ((parseDate(e.handleFromDate()).equals(LocalDate.now()))))) {
-                            ui.printTask(e);
-                        }
-                    }
-                }
-
-                // handles tasks with time
-                if (task.hasTime()) {
-                    if (parseDateTime(task.handleDueDate()).equals((LocalDate.now()))) {
-                        ui.printTask(task);
-                    }
-
-                    if (task instanceof Event e) {
-                        if (parseDateTime(e.handleFromDate()).isBefore((LocalDate.now()))
-                                || parseDateTime(e.handleFromDate()).equals((LocalDate.now()))
-                                && (parseDateTime(e.handleDueDate()).isAfter((LocalDate.now()))
-                                || parseDateTime(e.handleDueDate()).equals((LocalDate.now())))) {
-                            ui.printTask(e);
-                        }
-                    }
-                }
-
-            }
-            ui.br();
+            // check for command to print due tasaks
+           new DueCommand();
         }   else if (input.toLowerCase().equals("list")) {
             // check for command to print list
             new ListCommand();
@@ -117,41 +81,13 @@ public class Mocha {
                 }
 
                 if (tmp.equals("mark")) {
-                    ui.br();
-                    taskList.get(idx - 1).mark();
-
-                    try {
-                        this.taskFile.updateTask(taskList);
-                    } catch (IOException e) {
-                        ui.printError("Could not update: " + e.getMessage());
-                    }
-                    ui.br();
+                    new MarkCommand(idx - 1);
                 }
                 if (tmp.equals("unmark")) {
-                    ui.br();
-                    taskList.get(idx - 1).unmark();
-
-                    try {
-                        this.taskFile.updateTask(taskList);
-                    } catch (IOException e) {
-                        ui.printError("Could not update: " + e.getMessage());
-                    }
-                    ui.br();
+                    new UnmarkCommand(idx - 1);
                 }
                 if (tmp.equals("delete")) {
-                    ui.br();
-                    ui.delete(taskList.get(idx - 1));
-                    taskList.remove(idx - 1);
-
-                    try {
-                        this.taskFile.updateTask(taskList);
-                    } catch (IOException e) {
-                        ui.printError("Could not update: " + e.getMessage());
-                    }
-
-                    ui.printUpdates(this.taskList.size());
-                    ui.br();
-
+                    new DeleteCommand(idx - 1);
                 }
             } else {
 
@@ -236,7 +172,7 @@ public class Mocha {
             String input = scanner.nextLine(); //parser
 
             try {
-                Parser.validateInput(input); //parser
+                validateInput(input); //parser
             } catch (MochaException e) {
                 this.ui.printError(e.getMessage());
             }
