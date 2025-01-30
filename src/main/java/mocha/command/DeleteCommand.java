@@ -1,3 +1,10 @@
+package mocha.command;
+
+import mocha.MochaException;
+import mocha.TaskFile;
+import mocha.TaskList;
+import mocha.Ui;
+
 import java.io.IOException;
 
 public class DeleteCommand extends Command {

@@ -1,10 +1,12 @@
+package mocha.task;
+
 /**
  * Encapsulates a Todo task.
  *
  * @author K1mcheee
  */
 
-public class Todo extends Task{
+public class Todo extends Task {
 
     /**
      * Constructor for a Todo task.
