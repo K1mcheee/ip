@@ -44,6 +44,9 @@ public class Parser {
         } else {
             // check for keywords mark and unmark
             if (tmp.equals("mark") || tmp.equals("unmark") || tmp.equals("delete")) {
+                if (split.length < 2) {
+                    throw new MochaException("Specify the task number after the command!");
+                }
                 int idx = Integer.parseInt(split[1]);
 
                 if (tmp.equals("mark")) {
