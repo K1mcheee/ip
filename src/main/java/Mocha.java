@@ -15,40 +15,26 @@ import java.util.Scanner;
  * @author K1mcheee
  */
 public class Mocha {
-    private static final String BR = "____________________________________________________________";
     private static boolean isRunning = true;
-    //private static List<Task> commands = new ArrayList<>();
     private static Task task = null;
 
-    private TaskFile taskFile;
-    private List<Task> commands = new ArrayList<>();
-    public Mocha() {
+    private TaskFile taskFile; //storage
+    private List<Task> commands = new ArrayList<>(); //tasklist
 
-        this.taskFile = new TaskFile("data/mocha.txt");
+    private Ui ui;
+
+    public Mocha() {
+        this.ui = new Ui();
+        this.taskFile = new TaskFile("data/mocha.txt"); //storage
         try {
-            this.commands = this.taskFile.loadTask();
+            this.commands = this.taskFile.loadTask(); //tasklist
         } catch (FileNotFoundException e) {
-            System.out.println("Error could not load file: " + e.getMessage());
+            ui.printError("Error could not load file: " + e.getMessage());
         }
 
 
     }
 
-    /**
-     * Helper function to print when task is added
-     * @return Standard reply that task is updated
-     */
-    private static String printNew() {
-        return "\n Got it. I've added this task: \n";
-    }
-
-    /**
-     * Helper function to print whenever list is updated
-     * @return  number of taasks in list
-     */
-    private String printUpdates() {
-        return String.format(" Now you have %d tasks in the list. \n", this.commands.size());
-    }
 
     private LocalDate parseDate(String date) {
         return LocalDate.parse(date);
@@ -75,25 +61,18 @@ public class Mocha {
 
         // check for bye command to exit
         if (input.toLowerCase().equals("bye")) {
-            /*
-            try {
-                this.taskFile.saveTask(this.commands);
-            } catch (IOException e) {
-                System.out.println("Sorry, I could not save the task!");
-            } */
             isRunning = false;
-            System.out.println(BR + "\n Bye. Hope to see you again soon! \n" + BR);
+            ui.goodBye();
 
         }  else if (input.toLowerCase().equals("due")) {
-            // prints tasks that are due/currently on
-            System.out.println(BR);
+            ui.br();
             for (Task task : this.commands) {
 
                 // checks for tasks with LocalDate
-                if (!task.hasTime()) {
+                if (!task.hasTime() && !(task instanceof Todo)) {
                     // print task if due today
                     if (parseDate(task.handleDueDate()).equals(LocalDate.now())) {
-                        System.out.println(task);
+                        ui.printTask(task);
                     }
 
                     // if event, check if date today is within from and to dates
@@ -102,7 +81,7 @@ public class Mocha {
                                 || ((parseDate(e.handleFromDate()).equals(LocalDate.now()))))
                                 && (parseDate(e.handleDueDate()).isAfter(LocalDate.now())
                                 || ((parseDate(e.handleFromDate()).equals(LocalDate.now()))))) {
-                            System.out.println(e);
+                            ui.printTask(e);
                         }
                     }
                 }
@@ -110,7 +89,7 @@ public class Mocha {
                 // handles tasks with time
                 if (task.hasTime()) {
                     if (parseDateTime(task.handleDueDate()).equals((LocalDate.now()))) {
-                        System.out.println(task);
+                        ui.printTask(task);
                     }
 
                     if (task instanceof Event e) {
@@ -118,21 +97,18 @@ public class Mocha {
                                 || parseDateTime(e.handleFromDate()).equals((LocalDate.now()))
                                 && (parseDateTime(e.handleDueDate()).isAfter((LocalDate.now()))
                                 || parseDateTime(e.handleDueDate()).equals((LocalDate.now())))) {
-                            System.out.println(e);
+                            ui.printTask(e);
                         }
                     }
                 }
 
             }
-            System.out.println(BR);
-
+            ui.br();
         }   else if (input.toLowerCase().equals("list")) {
             // check for command to print list
-            System.out.println(BR);
-            for (int i = 1; i <= this.commands.size(); i++) {
-                System.out.println(i + "." + this.commands.get(i - 1));
-            }
-            System.out.println(BR);
+            ui.br();
+            ui.printTaskList(this.commands);
+            ui.br();
         } else {
             // check for keywords mark and unmark
             if (tmp.equals("mark") || tmp.equals("unmark") || tmp.equals("delete")) {
@@ -143,51 +119,43 @@ public class Mocha {
                 }
 
                 if (tmp.equals("mark")) {
-                    System.out.println(BR);
+                    ui.br();
                     commands.get(idx - 1).mark();
 
                     try {
                         this.taskFile.updateTask(commands);
                     } catch (IOException e) {
-                        System.out.println("Could not update: " + e.getMessage());
+                        ui.printError("Could not update: " + e.getMessage());
                     }
-                    System.out.println(BR);
+                    ui.br();
                 }
                 if (tmp.equals("unmark")) {
-                    System.out.println(BR);
+                    ui.br();
                     commands.get(idx - 1).unmark();
 
                     try {
                         this.taskFile.updateTask(commands);
                     } catch (IOException e) {
-                        System.out.println("Could not update: " + e.getMessage());
+                        ui.printError("Could not update: " + e.getMessage());
                     }
-
-                    System.out.println(BR);
+                    ui.br();
                 }
                 if (tmp.equals("delete")) {
-                    System.out.println(BR + "\n Alright, I have removed this task:");
-                    System.out.println(commands.get(idx - 1));
+                    ui.br();
+                    ui.delete(commands.get(idx - 1));
                     commands.remove(idx - 1);
 
                     try {
                         this.taskFile.updateTask(commands);
                     } catch (IOException e) {
-                        System.out.println("Could not update: " + e.getMessage());
+                        ui.printError("Could not update: " + e.getMessage());
                     }
 
-                    System.out.println(printUpdates() + BR);
+                    ui.printUpdates(this.commands.size());
+                    ui.br();
 
                 }
             } else {
-                // templates for string printing
-                String name = "";
-                String dueDate = "";
-                String to = "";
-                String from = "";
-
-                // retrieves command at 0 idx of array before dueDates
-                String[] cmd = date[0].split(" ");
 
                 // switch case to respond to input
                 switch (tmp) {
@@ -200,9 +168,11 @@ public class Mocha {
                             task = Todo.handle(input, 1);
                             this.taskFile.saveTask(input, false);
                             commands.add(task);
-                            System.out.println(BR + printNew() + task + "\n" + printUpdates() + BR);
+                            ui.printNewTask(task, commands.size());
                         } catch (IOException e) {
-                            System.out.println("Could not save: " + e.getMessage());
+                            ui.printError("Could not save: " + e.getMessage());
+                        }  catch (DateTimeParseException e) {
+                            // do nothing
                         }
                         break;
                     case "deadline":
@@ -217,14 +187,14 @@ public class Mocha {
                             task = Deadline.handle(input, 1);
                             this.taskFile.saveTask(input, false);
                             commands.add(task);
-                            System.out.println(BR + printNew() + task + "\n" + printUpdates() + BR);
+                            ui.printNewTask(task, commands.size());
 
                         } catch (IOException e) {
-                            System.out.println("Could not save: " + e.getMessage());
-                            System.out.println(BR);
+                            ui.printError("Could not save: " + e.getMessage());
+                            ui.br();
                         } catch (DateTimeParseException e) {
-                            System.out.println("Invalid date: " + e.getMessage());
-                            System.out.println(BR);
+                            ui.printError("Invalid date: " + e.getMessage());
+                            ui.br();
                         }
                         break;
 
@@ -240,13 +210,13 @@ public class Mocha {
                             task = Event.handle(input, 1);
                             this.taskFile.saveTask(input, false);
                             commands.add(task);
-                            System.out.println(BR + printNew() + task + "\n" + printUpdates() + BR);
+                            ui.printNewTask(task, commands.size());
                         } catch (IOException e) {
-                            System.out.println("Could not save: " + e.getMessage());
-                            System.out.println(BR);
+                            ui.printError("Could not save: " + e.getMessage());
+                            ui.br();
                         } catch (DateTimeParseException e) {
-                            System.out.println("Invalid date: " + e.getMessage());
-                            System.out.println(BR);
+                            ui.printError("Invalid date: " + e.getMessage());
+                            ui.br();
                         }
                         break;
 
@@ -260,28 +230,31 @@ public class Mocha {
 
     }
 
-    public static void main(String[] args) {
+    public void run() {
+        ui.welcome();
+        Scanner scanner = new Scanner(System.in); //ui
 
-            Mocha mocha = new Mocha();
-            System.out.println(BR + "\n Hello! I'm Mocha");
-            System.out.println(" What can I do for you? \n" + BR);
+        while (isRunning) {
+            String input = scanner.nextLine(); //parser
 
-            Scanner scanner = new Scanner(System.in);
-
-            while (isRunning) {
-                String input = scanner.nextLine();
-
-                try {
-                    mocha.validateInput(input);
-                } catch (MochaException e) {
+            try {
+                validateInput(input); //parser
+            } catch (MochaException e) {
+                    /*
                     System.out.println(BR);
-                    System.out.println(e.getMessage());
-                    System.out.println(BR);
-                }
-
+                    System.out.println(e.getMessage()); // uui
+                    System.out.println(BR);*/
+                this.ui.printError(e.getMessage());
             }
 
+        }
+    }
 
+    public static void main(String[] args) {
+
+            new Mocha().run();
+            //System.out.println(BR + "\n Hello! I'm Mocha"); //ui
+            //System.out.println(" What can I do for you? \n" + BR); //ui
 
     }
 }
