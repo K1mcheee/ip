@@ -7,12 +7,32 @@ import mocha.Ui;
 
 import java.io.IOException;
 
+/**
+ * Encapsulates a Mark command.
+ *
+ * @author K1mcheee
+ */
 public class MarkCommand extends Command {
+    /**Index of task*/
     private int idx;
 
+    /**
+     * Constructor to initialise a Mark command.
+     *
+     * @param idx Index of task of interest.
+     */
     public MarkCommand(int idx) {
         this.idx = idx;
     }
+
+    /**
+     * Runs the logic of the specific command.
+     * For Mark, marks task as done.
+     *
+     * @param tasks List of current tasks.
+     * @param ui Interface for users to interact with.
+     * @param storage Stores updates and changes to drive.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, TaskFile storage) {
 

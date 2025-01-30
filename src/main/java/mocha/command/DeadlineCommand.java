@@ -10,13 +10,34 @@ import mocha.task.Task;
 import java.io.IOException;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Encapsulates a deadline command.
+ *
+ * @author K1mcheee
+ */
 public class DeadlineCommand extends Command {
+    /**String entered by user*/
     private String input;
 
+    /**
+     * Constructor to initialise a
+     * Deadline command.
+     *
+     * @param input String entered by user.
+     */
     public DeadlineCommand(String input) {
         this.input = input;
     }
 
+    /**
+     * Runs the logic of the specific command.
+     * For Deadline, creates a new Deadline Task,
+     * and adds to list of current task.
+     *
+     * @param tasks List of current tasks.
+     * @param ui Interface for users to interact with.
+     * @param storage Stores updates and changes to drive.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, TaskFile storage) {
         try {

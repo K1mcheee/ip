@@ -1,0 +1,5 @@
+0 deadline sleep /by 2025-01-30 2359
+0 event sleep /from 2025-01-30 /to 2025-02-01
+1 todo eat
+1 todo sleep
+0 deadline sleep /by 2025-01-30

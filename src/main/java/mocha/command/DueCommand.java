@@ -9,8 +9,23 @@ import mocha.task.Todo;
 
 import java.time.LocalDate;
 
+/**
+ * Encapsulates a Due command.
+ *
+ * @author K1mcheee
+ */
 public class DueCommand extends Command {
 
+    /**
+     * Runs the logic of the specific command.
+     * For Due, prints out from the list
+     * of existing tasks those which current date
+     * falls within its range.
+     *
+     * @param tasks List of current tasks.
+     * @param ui Interface for users to interact with.
+     * @param storage Stores updates and changes to drive.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, TaskFile storage) {
         ui.br();
