@@ -8,18 +8,18 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList task, Ui ui, TaskFile storage) {
+    public void execute(TaskList tasks, Ui ui, TaskFile storage) {
         ui.br();
-        ui.delete(task.get(idx - 1));
-        task.remove(idx - 1);
+        ui.delete(tasks.get(idx - 1));
+        tasks.remove(idx - 1);
 
         try {
-            storage.updateTask(task);
+            storage.updateTask(tasks);
         } catch (IOException e) {
             ui.printError("Could not update: " + e.getMessage());
         }
 
-        ui.printUpdates(task.size());
+        ui.printUpdates(tasks.size());
         ui.br();
     }
 }

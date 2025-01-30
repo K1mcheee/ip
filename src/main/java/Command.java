@@ -1,7 +1,7 @@
 public abstract class Command {
     private boolean isRunning = true;
 
-    public abstract void execute(TaskList task, Ui ui, TaskFile storage);
+    public abstract void execute(TaskList tasks, Ui ui, TaskFile storage);
 
     public boolean isRunning() {
         return isRunning;

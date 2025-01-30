@@ -40,5 +40,6 @@ public class DueCommand extends Command {
                 }
             }
         }
+        ui.br();
     }
 }

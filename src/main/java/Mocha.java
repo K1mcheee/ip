@@ -63,14 +63,17 @@ public class Mocha {
 
         // check for bye command to exit
         if (input.toLowerCase().equals("bye")) {
-            new ByeCommand();
-
+            Command c = new ByeCommand();
+            c.execute(this.taskList, this.ui, this.taskFile);
+            this.isRunning = c.isRunning();
         }  else if (input.toLowerCase().equals("due")) {
-            // check for command to print due tasaks
-           new DueCommand();
+            // check for command to print due tasks
+            Command c = new DueCommand();
+            c.execute(this.taskList, this.ui, this.taskFile);
         }   else if (input.toLowerCase().equals("list")) {
             // check for command to print list
-            new ListCommand();
+            Command c = new ListCommand();
+            c.execute(this.taskList, this.ui, this.taskFile);
         } else {
             // check for keywords mark and unmark
             if (tmp.equals("mark") || tmp.equals("unmark") || tmp.equals("delete")) {
@@ -81,13 +84,16 @@ public class Mocha {
                 }
 
                 if (tmp.equals("mark")) {
-                    new MarkCommand(idx - 1);
+                    Command c = new MarkCommand(idx);
+                    c.execute(this.taskList, this.ui, this.taskFile);
                 }
                 if (tmp.equals("unmark")) {
-                    new UnmarkCommand(idx - 1);
+                    Command c = new UnmarkCommand(idx);
+                    c.execute(this.taskList, this.ui, this.taskFile);
                 }
                 if (tmp.equals("delete")) {
-                    new DeleteCommand(idx - 1);
+                    Command c = new DeleteCommand(idx);
+                    c.execute(this.taskList, this.ui, this.taskFile);
                 }
             } else {
 
@@ -97,17 +103,8 @@ public class Mocha {
                         if (split.length < 2) {
                             MochaException.emptyDescription("todo have 5 cups of bubble tea");
                         }
-                        try {
-                            // retrieve task
-                            task = Todo.handle(input, 1);
-                            this.taskFile.saveTask(input, false);
-                            taskList.add(task);
-                            ui.printNewTask(task, taskList.size());
-                        } catch (IOException e) {
-                            ui.printError("Could not save: " + e.getMessage());
-                        }  catch (DateTimeParseException e) {
-                            // do nothing
-                        }
+                        Command c = new TodoCommand(input);
+                        c.execute(this.taskList, this.ui, this.taskFile);
                         break;
                     case "deadline":
                         if (split.length < 2) {
@@ -116,20 +113,8 @@ public class Mocha {
                         if (date.length < 2) {
                             throw new MochaException("Remember to add a due date using:\n /by duedate");
                         }
-                        try {
-                            // retrieve task and deadline
-                            task = Deadline.handle(input, 1);
-                            this.taskFile.saveTask(input, false);
-                            taskList.add(task);
-                            ui.printNewTask(task, taskList.size());
-
-                        } catch (IOException e) {
-                            ui.printError("Could not save: " + e.getMessage());
-                            ui.br();
-                        } catch (DateTimeParseException e) {
-                            ui.printError("Invalid date: " + e.getMessage());
-                            ui.br();
-                        }
+                        Command d = new DeadlineCommand(input);
+                        d.execute(this.taskList, this.ui, this.taskFile);
                         break;
 
                     case "event":
@@ -139,19 +124,8 @@ public class Mocha {
                         if (date.length < 3) {
                             throw new MochaException("events require a from and to date!\n /from fromDate /to toDate");
                         }
-                        try {
-                            // retrieve task, from and to date
-                            task = Event.handle(input, 1);
-                            this.taskFile.saveTask(input, false);
-                            taskList.add(task);
-                            ui.printNewTask(task, taskList.size());
-                        } catch (IOException e) {
-                            ui.printError("Could not save: " + e.getMessage());
-                            ui.br();
-                        } catch (DateTimeParseException e) {
-                            ui.printError("Invalid date: " + e.getMessage());
-                            ui.br();
-                        }
+                        Command e = new EventCommand(input);
+                        e.execute(this.taskList, this.ui, this.taskFile);
                         break;
 
                     default:

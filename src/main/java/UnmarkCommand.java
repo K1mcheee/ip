@@ -8,12 +8,12 @@ public class UnmarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList task, Ui ui, TaskFile storage) {
+    public void execute(TaskList tasks, Ui ui, TaskFile storage) {
         ui.br();
-        task.get(idx - 1).unmark();
+        tasks.get(idx - 1).unmark();
 
         try {
-            storage.updateTask(task);
+            storage.updateTask(tasks);
         } catch (IOException e) {
             ui.printError("Could not update: " + e.getMessage());
         }

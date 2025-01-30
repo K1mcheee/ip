@@ -7,12 +7,12 @@ public class MarkCommand extends Command {
         this.idx = idx;
     }
     @Override
-    public void execute(TaskList task, Ui ui, TaskFile storage) {
+    public void execute(TaskList tasks, Ui ui, TaskFile storage) {
         ui.br();
-        task.get(idx - 1).mark();
+        tasks.get(idx - 1).mark();
 
         try {
-            storage.updateTask(task);
+            storage.updateTask(tasks);
         } catch (IOException e) {
             ui.printError("Could not update: " + e.getMessage());
         }
