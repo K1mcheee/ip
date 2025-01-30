@@ -88,6 +88,7 @@ public class Event extends Task {
         String[] inputFrom = date[1].split(" ");
         // retrieve toDate
         String[] inputTo = date[2].split(" ");
+
         try {
             if (inputFrom.length == 2 && dateOnly.matcher(inputFrom[1]).matches()
                 && inputTo.length == 2 && dateOnly.matcher(inputTo[1]).matches()) {
