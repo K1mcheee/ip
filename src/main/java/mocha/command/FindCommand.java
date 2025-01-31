@@ -3,6 +3,7 @@ package mocha.command;
 import mocha.TaskFile;
 import mocha.TaskList;
 import mocha.Ui;
+
 import mocha.task.Task;
 
 /**
@@ -40,7 +41,7 @@ public class FindCommand extends Command {
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
 
-            if (task.getName().equals(" " + keyword)) {
+            if (task.getName().contains(keyword)) {
 
                 ui.printTask(task);
             }
