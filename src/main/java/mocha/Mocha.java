@@ -42,7 +42,11 @@ public class Mocha {
         }
     }
 
+    public String getResponse(String input) {
+        return "Mocha heard: " + input;
+    }
+
     public static void main(String[] args) {
-        new Mocha("data/mocha.txt").run();
+        //new Mocha("data/mocha.txt").run();
     }
 }

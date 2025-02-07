@@ -13,7 +13,7 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
-    private Mocha mocha = new Mocha();
+    private Mocha mocha = new Mocha("data/mocha.txt");
 
     @Override
     public void start(Stage stage) {
@@ -22,7 +22,7 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setDuke(duke);  // inject the Duke instance
+            fxmlLoader.<MainWindow>getController().setMocha(mocha);  // inject the Mocha instance
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
