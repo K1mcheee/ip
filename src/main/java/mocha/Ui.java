@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Ui {
     /**Breakline to separate texts*/
-    private static final String BR = "____________________________________________________________";
+    private static final String BR = "___________________________";
     private Scanner scanner = new Scanner(System.in);
 
 
@@ -15,6 +15,7 @@ public class Ui {
      *
      * @return BR
      */
+
     public void br() {
         System.out.println(BR);
     }
