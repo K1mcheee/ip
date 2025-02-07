@@ -23,7 +23,7 @@ public class MainWindow extends AnchorPane {
     private Mocha mocha;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/tightBound.png"));
-    private Image mochaImage = new Image(this.getClass().getResourceAsStream("/images/lowerBound.png"));
+    private Image mochaImage = new Image(this.getClass().getResourceAsStream("/images/mocha.jpg"));
 
     @FXML
     public void initialize() {

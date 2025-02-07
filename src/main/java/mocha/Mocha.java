@@ -2,7 +2,10 @@ package mocha;
 
 import mocha.command.Command;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
+import java.io.PrintStream;
 
 /**
  * Encapsulates the functionality of a chatbot
@@ -43,7 +46,20 @@ public class Mocha {
     }
 
     public String getResponse(String input) {
-        return "Mocha heard: " + input;
+        // creates a stream to store output
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(output));
+        // saves old system.out
+        PrintStream prev = System.out;
+        try {
+            Command c = Parser.validateInput(input); //parser
+            c.execute(this.taskList, this.ui, this.taskFile);
+        } catch (MochaException e) {
+            this.ui.printError(e.getMessage());
+        }
+        // restore the system.out
+        System.setOut(prev);
+        return output.toString();
     }
 
     public static void main(String[] args) {
