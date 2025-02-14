@@ -35,6 +35,7 @@ public class DueCommand extends Command {
             if (!tasks.get(i).hasTime() && !(tasks.get(i) instanceof Todo)) {
                 // print task if due today
                 if (Parser.parseDate(tasks.get(i).handleDueDate()).equals(LocalDate.now())) {
+                    assert(tasks.get(i)!= null);
                     ui.printTask(tasks.get(i));
                 }
 
@@ -44,6 +45,7 @@ public class DueCommand extends Command {
                             || ((Parser.parseDate(e.handleFromDate()).equals(LocalDate.now()))))
                             && (Parser.parseDate(e.handleDueDate()).isAfter(LocalDate.now())
                             || ((Parser.parseDate(e.handleFromDate()).equals(LocalDate.now()))))) {
+                        assert(tasks.get(i)!= null);
                         ui.printTask(e);
                     }
                 }
@@ -52,6 +54,7 @@ public class DueCommand extends Command {
             // handles tasks with time
             if (tasks.get(i).hasTime()) {
                 if (Parser.parseDateTime(tasks.get(i).handleDueDate()).equals((LocalDate.now()))) {
+                    assert(tasks.get(i)!= null);
                     ui.printTask(tasks.get(i));
                 }
 
@@ -60,6 +63,7 @@ public class DueCommand extends Command {
                             || Parser.parseDateTime(e.handleFromDate()).equals((LocalDate.now()))
                             && (Parser.parseDateTime(e.handleDueDate()).isAfter((LocalDate.now()))
                             || Parser.parseDateTime(e.handleDueDate()).equals((LocalDate.now())))) {
+                        assert(tasks.get(i)!= null);
                         ui.printTask(e);
                     }
                 }

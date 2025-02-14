@@ -23,6 +23,7 @@ public class MarkCommand extends Command {
      * @param idx Index of task of interest.
      */
     public MarkCommand(int idx) {
+        assert(idx >= 0);
         this.idx = idx;
     }
 

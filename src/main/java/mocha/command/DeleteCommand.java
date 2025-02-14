@@ -38,6 +38,7 @@ public class DeleteCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, TaskFile storage) {
         ui.br();
+        assert(storage != null);
         try {
             if (idx < 1 || idx > tasks.size()) {
                 throw new MochaException("Task does not exist in the list! List has " + tasks.size() + " items");
