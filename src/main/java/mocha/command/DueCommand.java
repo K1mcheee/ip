@@ -6,6 +6,7 @@ import mocha.TaskList;
 import mocha.Ui;
 
 import mocha.task.Event;
+import mocha.task.Task;
 import mocha.task.Todo;
 
 import java.time.LocalDate;
@@ -17,6 +18,49 @@ import java.time.LocalDate;
  */
 public class DueCommand extends Command {
 
+
+    private void printLocalDateEvent(Event e, Ui ui) {
+        boolean isBefore = Parser.parseDate(e.handleFromDate()).isBefore(LocalDate.now());
+        boolean isAfter = Parser.parseDate(e.handleFromDate()).isAfter(LocalDate.now());
+        boolean isCurrent = Parser.parseDate(e.handleFromDate()).equals(LocalDate.now());
+
+        // checks if date today is within from and to dates
+        if ((isBefore || isCurrent) && (isAfter || isCurrent)) {
+            ui.printTask(e);
+        }
+    }
+
+    private void printLocalDateTimeEvent(Event e, Ui ui) {
+        boolean isBefore = Parser.parseDateTime(e.handleFromDate()).isBefore(LocalDate.now());
+        boolean isAfter = Parser.parseDateTime(e.handleFromDate()).isAfter(LocalDate.now());
+        boolean isCurrent = Parser.parseDateTime(e.handleFromDate()).equals(LocalDate.now());
+
+        // checks if date today is within from and to dates
+        if ((isBefore || isCurrent) && (isAfter || isCurrent)) {
+            ui.printTask(e);
+        }
+    }
+
+    private void printLocalDateTask(Task task, Ui ui) {
+        // print task if due today
+        if (Parser.parseDate(task.handleDueDate()).equals(LocalDate.now())) {
+            ui.printTask(task);
+        }
+
+        // if event, check if date today is within from and to dates
+        if (task instanceof Event e) {
+            printLocalDateEvent(e, ui);
+        }
+    }
+
+    private void printLocalDateTimeTask(Task task, Ui ui) {
+        if (Parser.parseDateTime(task.handleDueDate()).equals((LocalDate.now()))) {
+            ui.printTask(task);
+        }
+        if (task instanceof Event e) {
+            printLocalDateTimeEvent(e, ui);
+        }
+    }
     /**
      * Runs the logic of the specific command.
      * For Due, prints out from the list
@@ -34,35 +78,14 @@ public class DueCommand extends Command {
             // checks for tasks with LocalDate
             if (!tasks.get(i).hasTime() && !(tasks.get(i) instanceof Todo)) {
                 // print task if due today
-                if (Parser.parseDate(tasks.get(i).handleDueDate()).equals(LocalDate.now())) {
-                    ui.printTask(tasks.get(i));
-                }
-
-                // if event, check if date today is within from and to dates
-                if (tasks.get(i) instanceof Event e) {
-                    if (((Parser.parseDate(e.handleFromDate()).isBefore(LocalDate.now()))
-                            || ((Parser.parseDate(e.handleFromDate()).equals(LocalDate.now()))))
-                            && (Parser.parseDate(e.handleDueDate()).isAfter(LocalDate.now())
-                            || ((Parser.parseDate(e.handleFromDate()).equals(LocalDate.now()))))) {
-                        ui.printTask(e);
-                    }
-                }
+                printLocalDateTask(tasks.get(i), ui);
             }
 
             // handles tasks with time
             if (tasks.get(i).hasTime()) {
-                if (Parser.parseDateTime(tasks.get(i).handleDueDate()).equals((LocalDate.now()))) {
-                    ui.printTask(tasks.get(i));
-                }
+                // print task if due today
+                printLocalDateTimeTask(tasks.get(i), ui);
 
-                if (tasks.get(i) instanceof Event e) {
-                    if (Parser.parseDateTime(e.handleFromDate()).isBefore((LocalDate.now()))
-                            || Parser.parseDateTime(e.handleFromDate()).equals((LocalDate.now()))
-                            && (Parser.parseDateTime(e.handleDueDate()).isAfter((LocalDate.now()))
-                            || Parser.parseDateTime(e.handleDueDate()).equals((LocalDate.now())))) {
-                        ui.printTask(e);
-                    }
-                }
             }
         }
         ui.br();
