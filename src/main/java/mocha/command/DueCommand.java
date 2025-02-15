@@ -42,23 +42,24 @@ public class DueCommand extends Command {
     }
 
     private void printLocalDateTask(Task task, Ui ui) {
-        // print task if due today
-        if (Parser.parseDate(task.handleDueDate()).equals(LocalDate.now())) {
-            ui.printTask(task);
-        }
-
         // if event, check if date today is within from and to dates
         if (task instanceof Event e) {
             printLocalDateEvent(e, ui);
         }
+        // print other tasks if due today
+        if (Parser.parseDate(task.handleDueDate()).equals(LocalDate.now())) {
+            ui.printTask(task);
+        }
+
     }
 
     private void printLocalDateTimeTask(Task task, Ui ui) {
-        if (Parser.parseDateTime(task.handleDueDate()).equals((LocalDate.now()))) {
-            ui.printTask(task);
-        }
         if (task instanceof Event e) {
             printLocalDateTimeEvent(e, ui);
+        }
+
+        if (Parser.parseDateTime(task.handleDueDate()).equals((LocalDate.now()))) {
+            ui.printTask(task);
         }
     }
     /**

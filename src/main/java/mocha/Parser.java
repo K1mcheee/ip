@@ -62,20 +62,12 @@ public class Parser {
         }
         int idx = Integer.parseInt(split[1]);
 
-        switch (tmp) {
-        case "mark" -> {
-            return new MarkCommand(idx);
-        }
-        case "unmark" -> {
-            return new UnmarkCommand(idx);
-        }
-        case "delete" -> {
-            return new DeleteCommand(idx);
-        }
-        default -> {
-            return parseTaskCommand(tmp, input, split, date);
-        }
-        }
+        return switch (tmp) {
+        case "mark" -> new MarkCommand(idx);
+        case "unmark" ->  new UnmarkCommand(idx);
+        case "delete" -> new DeleteCommand(idx);
+        default ->  throw new MochaException("Invalid command");
+        };
     }
 
     /**
@@ -91,14 +83,15 @@ public class Parser {
         String[] split = input.split(" ");
         String[] date = input.split("/");
         String tmp = split[0].toLowerCase();
-        Command c = null;
+        Command c;
 
         // check for single-word commands
         switch (input.toLowerCase()) {
         case "bye" -> c = new ByeCommand(); // check for command to exit
         case "due" -> c = new DueCommand(); // check for command to print due tasks
         case "list" -> c = new ListCommand(); // check for command to print list
-        default -> c = parseOtherCommand(tmp, input, split, date);
+        case "mark", "unmark", "delete" -> c = parseOtherCommand(tmp, input, split, date);
+        default -> c = parseTaskCommand(tmp, input, split, date);
         }
 
         return c;
