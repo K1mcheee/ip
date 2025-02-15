@@ -95,7 +95,7 @@ public class Task {
         return this.isDone ? "X" : " ";
     }
 
-    private String getTag() {
+    public String getTag() {
         return this.tag == null ? "" : this.tag;
     }
 

@@ -41,7 +41,7 @@ public class FindCommand extends Command {
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
 
-            if (task.getName().contains(keyword)) {
+            if (task.getName().contains(keyword) || task.getTag().contains(keyword)) {
 
                 ui.printTask(task);
             }

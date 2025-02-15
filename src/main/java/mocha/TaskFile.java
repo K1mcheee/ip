@@ -93,7 +93,8 @@ public class TaskFile {
                 for (int i = 0; i < list.size(); i++) {
                     Task task = list.get(i);
                     String tmp = task.isDone() ? "1 " : "0 ";
-                    writer.write(tmp + task.handle());
+                    String tag = task.getTag() == null ? "" : task.getTag();
+                    writer.write(tmp + task.handle() + " " + tag);
                     writer.newLine();
                 }
             }
