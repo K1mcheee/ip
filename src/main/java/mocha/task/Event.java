@@ -28,6 +28,10 @@ public class Event extends Task {
     private boolean hasTime = false;
 
 
+    private static final Pattern DATE_ONLY = Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
+    private static final Pattern DATE_AND_TIME = Pattern.compile("\\d{4}-\\d{2}-\\d{2} \\d{4}");
+    private static final DateTimeFormatter DT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+
     /**
      * Constructor for Event task.
      * Calls parent constructor to set name.
@@ -67,18 +71,12 @@ public class Event extends Task {
         this.toTime = to;
     }
 
-    public static Event handle(String input, int idx) {
+    public static Event handle(String input, int idx) throws MochaException {
         String name = "";
-        String to = "";
-        String from = "";
 
         String[] date = input.split("/");
         // retrieves command at 0 idx of array before dueDates
         String[] cmd = date[0].split(" ");
-
-        Pattern dateOnly = Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
-        Pattern dateAndTime = Pattern.compile("\\d{4}-\\d{2}-\\d{2} \\d{4}");
-        DateTimeFormatter dTFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
         // retrieve task
         for (int i = idx; i < cmd.length; i++) {
@@ -90,26 +88,26 @@ public class Event extends Task {
         // retrieve toDate
         String[] inputTo = date[2].split(" ");
 
-        try {
-            if (inputFrom.length == 2 && dateOnly.matcher(inputFrom[1]).matches()
-                && inputTo.length == 2 && dateOnly.matcher(inputTo[1]).matches()) {
+        return processEventCommand(name, idx, inputFrom, inputTo);
+    }
 
-                return new Event(name, LocalDate.parse(inputFrom[1]), LocalDate.parse(inputTo[1]));
-
-            } else if (inputFrom.length > 2 &&
-                    dateAndTime.matcher(inputFrom[1] + " " + inputFrom[2]).matches()
-                    && inputTo.length > 2 && dateAndTime.matcher(inputTo[1] + " " + inputTo[2]).matches()) {
-
-                Event task = new Event(name, LocalDateTime.parse(inputFrom[1] + " " + inputFrom[2], dTFormat),
-                        LocalDateTime.parse(inputTo[1] + " " + inputTo[2], dTFormat));
-                task.hasTime = true;
-                return task;
-
-            } else {
-                MochaException.invalidDateTime();
-            }
-        } catch (MochaException e) {
-            System.out.println(e.getMessage());
+    private static Event processEventCommand(String name,int idx,
+                                             String[] inputFrom, String[] inputTo) throws MochaException {
+        String to = "";
+        String from = "";
+        if (inputFrom.length == 2 && DATE_ONLY.matcher(inputFrom[1]).matches()
+                && inputTo.length == 2 && DATE_ONLY.matcher(inputTo[1]).matches()) {
+            return new Event(name, LocalDate.parse(inputFrom[1]), LocalDate.parse(inputTo[1]));
+        }
+        if (inputFrom.length > 2 &&
+                DATE_AND_TIME.matcher(inputFrom[1] + " " + inputFrom[2]).matches()
+                && inputTo.length > 2 && DATE_AND_TIME.matcher(inputTo[1] + " " + inputTo[2]).matches()) {
+            Event task = new Event(name, LocalDateTime.parse(inputFrom[1] + " " + inputFrom[2], DT_FORMAT),
+                    LocalDateTime.parse(inputTo[1] + " " + inputTo[2], DT_FORMAT));
+            task.hasTime = true;
+            return task;
+        } else {
+            MochaException.invalidDateTime();
         }
 
         for (int i = idx; i < inputFrom.length; i++) {
@@ -119,7 +117,6 @@ public class Event extends Task {
         for (int i = idx; i < inputTo.length; i++) {
             to += " " + inputTo[i];
         }
-
         return new Event(name, from, to);
     }
 
@@ -132,44 +129,44 @@ public class Event extends Task {
     public String printFromDate() {
         if (this.from != null) {
             return from;
-        } else if (this.fromDate != null) {
-            return this.fromDate.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
-        } else {
-            return this.fromTime.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm"));
         }
+        if (this.fromDate != null) {
+            return this.fromDate.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+        }
+        return this.fromTime.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm"));
     }
 
     @Override
     public String printDueDate() {
         if (this.to != null) {
             return from;
-        } else if (this.toDate != null) {
-            return this.toDate.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
-        } else {
-            return this.toTime.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm"));
         }
+        if (this.toDate != null) {
+            return this.toDate.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+        }
+        return this.toTime.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm"));
     }
 
     @Override
     public String handleFromDate() {
         if (this.from != null) {
             return from;
-        } else if (this.fromDate != null) {
-            return this.fromDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        } else {
-            return this.fromTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
         }
+        if (this.fromDate != null) {
+            return this.fromDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        }
+        return this.fromTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
     }
 
     @Override
     public String handleDueDate() {
         if (this.to != null) {
-            return from;
-        } else if (this.toDate != null) {
-            return this.toDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        } else {
-            return this.toTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
+            return to;
         }
+        if (this.toDate != null) {
+            return this.toDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        }
+        return this.toTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
     }
 
     @Override
