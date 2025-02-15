@@ -58,7 +58,6 @@ public class TaskFile {
                     task = new Task(line);
                     break;
                 }
-
                 list.add(task);
             }
         } catch (IOException e) {

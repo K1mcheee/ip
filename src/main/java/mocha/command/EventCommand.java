@@ -1,5 +1,6 @@
 package mocha.command;
 
+import mocha.MochaException;
 import mocha.TaskFile;
 import mocha.TaskList;
 import mocha.Ui;
@@ -50,6 +51,9 @@ public class EventCommand extends Command {
             ui.br();
         } catch (DateTimeParseException e) {
             ui.printError("Invalid date: " + e.getMessage());
+            ui.br();
+        } catch (MochaException e) {
+            ui.printError(e.getMessage());
             ui.br();
         }
     }
