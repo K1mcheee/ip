@@ -37,6 +37,9 @@ public class Task {
     public void update() {
         this.isDone = true;
     }
+    public void updateTag(String tag) {
+        this.tag = tag;
+    }
 
     /**
      * Marks task as done and prints out status of task.
@@ -49,8 +52,13 @@ public class Task {
     }
 
     public void tag(String tag) {
-        this.tag = "# " + tag;
+        this.tag = tag;
         System.out.println("Tagged " + this);
+    }
+
+    public void untag() {
+        this.tag = null;
+        System.out.println("Untagged " + this);
     }
 
     /**
@@ -96,8 +104,9 @@ public class Task {
     }
 
     public String getTag() {
-        return this.tag == null ? "" : this.tag;
+        return this.tag == null ? "" : "# " + this.tag;
     }
+
 
     /**
      * Prints the task and status of task.
