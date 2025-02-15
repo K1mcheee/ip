@@ -43,6 +43,7 @@ public class DeadlineCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, TaskFile storage) {
         try {
+            assert(tasks != null);
             // retrieve task and deadline
             Task task = Deadline.handle(input, 1);
             storage.saveTask(input, false);

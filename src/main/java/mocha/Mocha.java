@@ -53,6 +53,7 @@ public class Mocha {
         PrintStream prev = System.out;
         try {
             Command c = Parser.validateInput(input); //parser
+            assert (c != null) : "Command could not be parsed: " + input;
             c.execute(this.taskList, this.ui, this.taskFile);
         } catch (MochaException e) {
             this.ui.printError(e.getMessage());

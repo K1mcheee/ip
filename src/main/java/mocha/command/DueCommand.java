@@ -79,14 +79,16 @@ public class DueCommand extends Command {
             // checks for tasks with LocalDate
             if (!tasks.get(i).hasTime() && !(tasks.get(i) instanceof Todo)) {
                 // print task if due today
+                assert(tasks.get(i)!= null);
                 printLocalDateTask(tasks.get(i), ui);
+
             }
 
             // handles tasks with time
             if (tasks.get(i).hasTime()) {
+                assert(tasks.get(i)!= null);
                 // print task if due today
                 printLocalDateTimeTask(tasks.get(i), ui);
-
             }
         }
         ui.br();
