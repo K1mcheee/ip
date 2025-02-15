@@ -48,10 +48,10 @@ public class Parser {
     }
 
     private static Command parseOtherCommand(String tmp, String input,
-                                               String[] split, String[] date) throws MochaException {
+                                               String[] split, String[] keywords) throws MochaException {
         // check for validity
         if (tmp.equals("mark") || tmp.equals("unmark")
-                || tmp.equals("delete") || tmp.equals("find")) {
+                || tmp.equals("delete") || tmp.equals("find") || tmp.equals("tag")) {
             if (split.length < 2) {
                 throw new MochaException("Specify the task number after the command!");
             }
@@ -62,6 +62,10 @@ public class Parser {
         }
         int idx = Integer.parseInt(split[1]);
 
+        if (tmp.equals("tag")) {
+            String tag = keywords[1];
+            return new TagCommand(tag, idx);
+        }
         return switch (tmp) {
         case "mark" -> new MarkCommand(idx);
         case "unmark" ->  new UnmarkCommand(idx);
@@ -86,11 +90,11 @@ public class Parser {
         Command c;
 
         // check for single-word commands
-        switch (input.toLowerCase()) {
+        switch (tmp) {
         case "bye" -> c = new ByeCommand(); // check for command to exit
         case "due" -> c = new DueCommand(); // check for command to print due tasks
         case "list" -> c = new ListCommand(); // check for command to print list
-        case "mark", "unmark", "delete" -> c = parseOtherCommand(tmp, input, split, date);
+        case "find", "mark", "unmark", "delete", "tag" -> c = parseOtherCommand(tmp, input, split, date);
         default -> c = parseTaskCommand(tmp, input, split, date);
         }
 
