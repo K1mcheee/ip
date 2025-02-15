@@ -28,35 +28,22 @@ public class TaskFile {
         try(BufferedReader reader = new BufferedReader(new FileReader(f))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] split = line.split(" ");
+                String[] tag = line.split("#");
 
+                String[] split = tag[0].split(" ");
                 Task task;
 
                 switch (split[1]) {
-                case "todo":
-                    task = Todo.handle(line,2);
-
-                    if (split[0].equals("1")) {
-                        task.update();
-                    }
-                    break;
-                case "deadline":
-                    task = Deadline.handle(line,2);
-
-                    if (split[0].equals("1")) {
-                        task.update();
-                    }
-                    break;
-                case "event":
-                    task = Event.handle(line,2);
-
-                    if (split[0].equals("1")) {
-                        task.update();
-                    }
-                    break;
-                default:
-                    task = new Task(line);
-                    break;
+                case "todo" -> task = Todo.handle(tag[0],2);
+                case "deadline" ->task = Deadline.handle(tag[0],2);
+                case "event" -> task = Event.handle(tag[0],2);
+                default -> task = new Task(line);
+                }
+                if (split[0].equals("1")) {
+                    task.update();
+                }
+                if (tag.length > 1 ) {
+                    task.updateTag(tag[1]);
                 }
                 list.add(task);
             }
@@ -93,7 +80,8 @@ public class TaskFile {
                 for (int i = 0; i < list.size(); i++) {
                     Task task = list.get(i);
                     String tmp = task.isDone() ? "1 " : "0 ";
-                    writer.write(tmp + task.handle());
+                    String tag = task.getTag() == null ? "" : task.getTag();
+                    writer.write(tmp + task.handle() + " " + tag);
                     writer.newLine();
                 }
             }

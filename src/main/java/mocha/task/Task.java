@@ -11,6 +11,7 @@ public class Task {
     private String name;
     /** status of task */
     private boolean isDone = false;
+    private String tag = null;
 
     public boolean isDone() {
         return this.isDone;
@@ -36,6 +37,9 @@ public class Task {
     public void update() {
         this.isDone = true;
     }
+    public void updateTag(String tag) {
+        this.tag = tag;
+    }
 
     /**
      * Marks task as done and prints out status of task.
@@ -44,7 +48,17 @@ public class Task {
     public void mark() {
         this.isDone = true;
         System.out.println(" Nice! I've marked this task as done:");
-        System.out.println(this.toString());
+        System.out.println(this);
+    }
+
+    public void tag(String tag) {
+        this.tag = tag;
+        System.out.println("Tagged " + this);
+    }
+
+    public void untag() {
+        this.tag = null;
+        System.out.println("Untagged " + this);
     }
 
     /**
@@ -54,7 +68,7 @@ public class Task {
     public void unmark() {
         this.isDone = false;
         System.out.println(" OK, I've marked this task as not done yet:");
-        System.out.println(this.toString());
+        System.out.println(this);
     }
 
     public String getName() {
@@ -89,6 +103,11 @@ public class Task {
         return this.isDone ? "X" : " ";
     }
 
+    public String getTag() {
+        return this.tag == null ? "" : "# " + this.tag;
+    }
+
+
     /**
      * Prints the task and status of task.
      *
@@ -96,7 +115,7 @@ public class Task {
      */
     @Override
     public String toString() {
-        return String.format("[%s]%s", this.getStatusIcon(), this.name);
+        return String.format("[%s]%s %s", this.getStatusIcon(), this.name, this.getTag());
     }
 
 }
