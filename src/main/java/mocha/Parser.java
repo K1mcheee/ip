@@ -98,7 +98,6 @@ public class Parser {
         case "find", "mark", "unmark", "delete", "tag", "untag" -> c = parseOtherCommand(tmp, input, split, date);
         default -> c = parseTaskCommand(tmp, input, split, date);
         }
-
         return c;
 
     }
