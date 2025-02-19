@@ -49,6 +49,7 @@ public class Parser {
 
     private static Command parseOtherCommand(String tmp, String input,
                                                String[] split, String[] keywords) throws MochaException {
+
         // check for validity
         if (tmp.equals("mark") || tmp.equals("unmark") || tmp.equals("untag")
                 || tmp.equals("delete") || tmp.equals("find") || tmp.equals("tag")) {
@@ -56,6 +57,7 @@ public class Parser {
                 throw new MochaException("Specify the task number after the command!");
             }
         }
+
         if (tmp.equals("find")) {
             String keyword = split[1];
             return new FindCommand(keyword);
@@ -85,10 +87,11 @@ public class Parser {
      */
     public static Command validateInput(String input) throws MochaException {
         // parse input
-        String[] split = input.split(" ");
+        String[] split = input.split("\\s+");
         String[] date = input.split("/");
         String tmp = split[0].toLowerCase();
         Command c;
+
 
         // check for single-word commands
         switch (tmp) {
