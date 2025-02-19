@@ -31,7 +31,4 @@ public class MochaException extends Exception {
         throw new MochaException("Task requires a description!\nFor example...\n" + task);
     }
 
-    public static void invalidDateTime() throws MochaException{
-        throw new MochaException("Invalid date/time! Input as yyyy-mm-dd for date and tttt for time!");
-    }
 }
