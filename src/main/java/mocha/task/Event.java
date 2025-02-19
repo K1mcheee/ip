@@ -93,31 +93,30 @@ public class Event extends Task {
 
     private static Event processEventCommand(String name,int idx,
                                              String[] inputFrom, String[] inputTo) throws MochaException {
-        String to = "";
-        String from = "";
+
         if (inputFrom.length == 2 && DATE_ONLY.matcher(inputFrom[1]).matches()
                 && inputTo.length == 2 && DATE_ONLY.matcher(inputTo[1]).matches()) {
+
+            if (LocalDate.parse(inputFrom[1]).isAfter(LocalDate.parse(inputTo[1]))) {
+                throw new MochaException("To date is after from!");
+            }
+
             return new Event(name, LocalDate.parse(inputFrom[1]), LocalDate.parse(inputTo[1]));
         }
         if (inputFrom.length > 2 &&
                 DATE_AND_TIME.matcher(inputFrom[1] + " " + inputFrom[2]).matches()
                 && inputTo.length > 2 && DATE_AND_TIME.matcher(inputTo[1] + " " + inputTo[2]).matches()) {
+
+            if (LocalDateTime.parse(inputFrom[1]).isAfter(LocalDateTime.parse(inputTo[1]))) {
+                throw new MochaException("To date is after from!");
+            }
+
             Event task = new Event(name, LocalDateTime.parse(inputFrom[1] + " " + inputFrom[2], DT_FORMAT),
                     LocalDateTime.parse(inputTo[1] + " " + inputTo[2], DT_FORMAT));
             task.hasTime = true;
             return task;
-        } else {
-            MochaException.invalidDateTime();
         }
-
-        for (int i = idx; i < inputFrom.length; i++) {
-            from += " " + inputFrom[i];
-        }
-
-        for (int i = idx; i < inputTo.length; i++) {
-            to += " " + inputTo[i];
-        }
-        return new Event(name, from, to);
+        throw new MochaException("Invalid date/time! Input as yyyy-mm-dd for date and tttt for time!");
     }
 
     @Override
