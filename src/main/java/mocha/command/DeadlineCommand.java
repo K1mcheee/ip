@@ -51,10 +51,8 @@ public class DeadlineCommand extends Command {
 
         } catch (IOException e) {
             ui.printError("Could not save: " + e.getMessage());
-            ui.br();
         } catch (DateTimeParseException e) {
             ui.printError("Invalid date: " + e.getMessage());
-            ui.br();
         } catch (MochaException e) {
             ui.printError(e.getMessage());
         }

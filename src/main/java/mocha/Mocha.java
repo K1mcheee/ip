@@ -29,7 +29,7 @@ public class Mocha {
             ui.printError("Error could not load file: " + e.getMessage());
         }
     }
-
+/*
     public void run() {
         ui.welcome();
         while (isRunning) {
@@ -43,7 +43,7 @@ public class Mocha {
             }
 
         }
-    }
+    }*/
 
     public String getResponse(String input) {
         // creates a stream to store output
@@ -52,6 +52,7 @@ public class Mocha {
         // saves old system.out
         PrintStream prev = System.out;
         try {
+            ui.response();
             Command c = Parser.validateInput(input); //parser
             c.execute(this.taskList, this.ui, this.taskFile);
         } catch (MochaException e) {

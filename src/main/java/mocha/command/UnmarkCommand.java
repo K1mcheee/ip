@@ -36,7 +36,6 @@ public class UnmarkCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, TaskFile storage) {
-        ui.br();
         try {
             if (idx < 1 || idx > tasks.size()) {
                 throw new MochaException("Task does not exist in the list! List has " + tasks.size() + " items");
@@ -49,6 +48,5 @@ public class UnmarkCommand extends Command {
         } catch (IOException e) {
                 ui.printError("Could not update: " + e.getMessage());
         }
-        ui.br();
     }
 }

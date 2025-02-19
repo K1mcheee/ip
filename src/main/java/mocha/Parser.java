@@ -42,8 +42,8 @@ public class Parser {
             }
             return new EventCommand(input);
         default:
-            throw new MochaException("Searching through tasks... \n" +
-                    "sorry, it seems I have not learnt this command!");
+            throw new MochaException("Sorry I am out of beans... \n" +
+                    "I do not understand this command!");
         }
     }
 

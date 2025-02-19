@@ -74,7 +74,6 @@ public class DueCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, TaskFile storage) {
-        ui.br();
         for (int i = 0; i < tasks.size(); i++) {
             // checks for tasks with LocalDate
             if (!tasks.get(i).hasTime() && !(tasks.get(i) instanceof Todo)) {
@@ -89,6 +88,5 @@ public class DueCommand extends Command {
 
             }
         }
-        ui.br();
     }
 }

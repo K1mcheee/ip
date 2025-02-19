@@ -35,7 +35,6 @@ public class FindCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, TaskFile storage) {
-        ui.br();
         System.out.println("Here are the matching tasks in your list:");
         
         for (int i = 0; i < tasks.size(); i++) {
@@ -46,6 +45,5 @@ public class FindCommand extends Command {
                 ui.printTask(task);
             }
         }
-        ui.br();
     }
 }

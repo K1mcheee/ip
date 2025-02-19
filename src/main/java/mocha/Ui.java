@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Ui {
     /**Breakline to separate texts*/
-    private static final String BR = "___________________________";
+    private static final String BR = "===================";
     private Scanner scanner = new Scanner(System.in);
 
 
@@ -26,6 +26,10 @@ public class Ui {
     public void welcome() {
         System.out.println(BR + "\n Hello! I'm Mocha");
         System.out.println(" What can I do for you? \n" + BR);
+    }
+
+    public void response() {
+        System.out.println("☕ Brewing response ☕... \n" + BR);
     }
 
     public String read() {
@@ -50,7 +54,7 @@ public class Ui {
      * @param error Error message generated.
      */
     public void printError(String error) {
-        System.out.println(BR + "\n" + error);
+        System.out.println(error);
     }
 
     /**
@@ -82,8 +86,8 @@ public class Ui {
     }
 
     public void printNewTask(Task task, int len) {
-        System.out.println(BR + "\n" + this.printNew() + "\n" + task
-                + "\n" + this.printUpdates(len) + "\n" + BR);
+        System.out.println(this.printNew() + "\n" + task
+                + "\n" + this.printUpdates(len));
         
     }
 
