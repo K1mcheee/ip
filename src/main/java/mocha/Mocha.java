@@ -29,21 +29,6 @@ public class Mocha {
             ui.printError("Error could not load file: " + e.getMessage());
         }
     }
-/*
-    public void run() {
-        ui.welcome();
-        while (isRunning) {
-            String input = ui.read(); //parser
-            try {
-                Command c = Parser.validateInput(input); //parser
-                c.execute(this.taskList, this.ui, this.taskFile);
-                isRunning = c.isRunning();
-            } catch (MochaException e) {
-                this.ui.printError(e.getMessage());
-            }
-
-        }
-    }*/
 
     public String getResponse(String input) {
         // creates a stream to store output
