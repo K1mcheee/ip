@@ -65,6 +65,9 @@ public class Parser {
         int idx = Integer.parseInt(split[1]);
 
         if (tmp.equals("tag")) {
+            if (keywords.length < 2) {
+                throw new MochaException("Format should be: tag <number> /tag");
+            }
             String tag = keywords[1];
             return new TagCommand(tag, idx);
         }
