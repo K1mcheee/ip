@@ -21,7 +21,7 @@ public class Main extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
-            stage.setTitle("Mocha☕");
+            stage.setTitle("Mocha \u2615");
             stage.setScene(scene);
             fxmlLoader.<MainWindow>getController().setMocha(mocha);  // inject the Mocha instance
             stage.show();

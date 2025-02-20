@@ -47,25 +47,27 @@ public class Parser {
         }
     }
 
-    private static Command parseOtherCommand(String tmp, String input,
-                                               String[] split, String[] keywords) throws MochaException {
+    private static Command parseOtherCommand(String tmp,  String[] split, String[] keywords) throws MochaException {
 
-        // check for validity
-        if (tmp.equals("mark") || tmp.equals("unmark") || tmp.equals("untag")
-                || tmp.equals("delete") || tmp.equals("find") || tmp.equals("tag")) {
-            if (split.length < 2) {
-                throw new MochaException("Specify the task number after the command!");
-            }
+        if (split.length < 2) {
+            throw new MochaException("Specify the task number after the command!");
+        }
+
+        if (!split[1].matches("\\d+")) {
+            throw new MochaException("invalid format!");
         }
 
         if (tmp.equals("find")) {
+            if (!split[1].contains("/")) {
+                throw new MochaException("command format should be: find /keyword");
+            }
             String keyword = keywords[1];
             return new FindCommand(keyword);
         }
+        
         int idx = Integer.parseInt(split[1]);
-
         if (tmp.equals("tag")) {
-            if (keywords.length < 2) {
+            if (keywords.length < 2 || keywords[1].contains("/")) {
                 throw new MochaException("Format should be: tag <number> /tag");
             }
             String tag = keywords[1];
@@ -101,7 +103,7 @@ public class Parser {
         case "bye" -> c = new ByeCommand(); // check for command to exit
         case "due" -> c = new DueCommand(); // check for command to print due tasks
         case "list" -> c = new ListCommand(); // check for command to print list
-        case "find", "mark", "unmark", "delete", "tag", "untag" -> c = parseOtherCommand(tmp, input, split, date);
+        case "find", "mark", "unmark", "delete", "tag", "untag" -> c = parseOtherCommand(tmp, split, date);
         default -> c = parseTaskCommand(tmp, input, split, date);
         }
         return c;

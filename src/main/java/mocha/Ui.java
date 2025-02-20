@@ -13,7 +13,7 @@ public class Ui {
      * Prints default response for personality.
      */
     public void response() {
-        System.out.println("☕ Brewing response ☕... \n" + BR);
+        System.out.println("\u2615 Brewing response \u2615... \n" + BR);
     }
 
     /**
