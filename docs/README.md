@@ -12,18 +12,18 @@ do it for you!
 
 Here is an overview of commands you can make, click on each to find out more!
 
-| Command                       | What it does          |
-|-------------------------------|-----------------------|
-| [todo](###Todo Tasks)         | adds a todo task      |
-| [deadline](###Deadline Tasks) | adds a deadline task  |
-| [event](###Event Tasks)       | adds a event task     |
-| [list](##List)                | prints out task list  |
-| [delete](##Delete)            | deletes a task        |
-| [mark](##Mark)                | mark a task as done   |
-| [unmark](##Unmark)            | unmark a task as done |
-| [tag](##Tag)                  | tag a task            |
-| [untag](##Untag)              | untag a task          |
-| [find](##Find)                | find a task           |
+| Command              | What it does          |
+|----------------------|-----------------------|
+| [todo](#Todo-Tasks)  | adds a todo task      |
+| [deadline](#Deadline-Tasks) | adds a deadline task  |
+| [event](#Event-Tasks) | adds a event task     |
+| [list](#List)        | prints out task list  |
+| [delete](#Delete)    | deletes a task        |
+| [mark](#Mark)        | mark a task as done   |
+| [unmark](#Unmark)    | unmark a task as done |
+| [tag](#Tag)          | tag a task            |
+| [untag](#Untag)      | untag a task          |
+| [find](#Find)        | find a task           |
 
 ## Adding Tasks
 
