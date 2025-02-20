@@ -25,6 +25,12 @@ Here is an overview of commands you can make, click on each to find out more!
 | [untag](#untag)             | untag a task          |
 | [find](#find)               | find a task           |
 
+## Command Format
+☕ Commands can be in both upper or lower case  
+☕ Commands should be the first word in an input  
+☕ Words in <brackets\> are parameters supplied by user  
+☕ Commands with `/` should be followed accordingly
+
 ## Adding Tasks
 
 There are 3 types of tasks you can add -- _todo_, _deadline_ and _event_ tasks to suit your needs!
@@ -122,10 +128,10 @@ Example: `delete 1`
 ## Find
 
 - Find a task based on keyword specified
-  - Can find based on task's [tag](##Tag)
+  - Can find based on task's [tag](#tag)
 - Command: find /keywords
 
-Example: 'find /a coffee'
+Example: `find /a coffee`
 
 **Output**:
 
