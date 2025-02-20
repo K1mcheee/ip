@@ -1,30 +1,224 @@
-# Duke User Guide
+# Mocha User Guide
 
-// Update the title above to match the actual product name
+![Ui.png](Ui.png)
 
-// Product screenshot goes here
+Mocha is an interactive bot which helps you to track your tasks. No longer worry about forgetting your tasks, let Mocha
+do it for you!
 
-// Product intro goes here
+> ☕**Fun fact**☕   
+> The name mocha was inspired from javascript's old name
 
-## Adding deadlines
+## Overview
 
-// Describe the action and its outcome.
+Here is an overview of commands you can make, click on each to find out more!
 
-// Give examples of usage
+| Command                       | What it does          |
+|-------------------------------|-----------------------|
+| [todo](###Todo Tasks)         | adds a todo task      |
+| [deadline](###Deadline Tasks) | adds a deadline task  |
+| [event](###Event Tasks)       | adds a event task     |
+| [list](##List)                | prints out task list  |
+| [delete](##Delete)            | deletes a task        |
+| [mark](##Mark)                | mark a task as done   |
+| [unmark](##Unmark)            | unmark a task as done |
+| [tag](##Tag)                  | tag a task            |
+| [untag](##Untag)              | untag a task          |
+| [find](##Find)                | find a task           |
 
-Example: `keyword (optional arguments)`
+## Adding Tasks
 
-// A description of the expected outcome goes here
+There are 3 types of tasks you can add -- _todo_, _deadline_ and _event_ tasks to suit your needs!
+
+### Todo Tasks
+
+- Tasks that do not have any deadlines
+- Command: `todo <task>`
+
+Example: `todo have a coffee`
+<details>
+<summary> Output</summary>
 
 ```
-expected output
+☕ Brewing response ☕...  
+=========================  
+Got it, I've added this task:  
+[T][] have a coffee  
+Now you have 1 tasks in the list.
 ```
 
-## Feature ABC
-
-// Feature details
+</details>
 
 
-## Feature XYZ
+### Deadline Tasks
 
-// Feature details
+- Tasks that have to be completed by a deadline
+  - Deadline can be formatted as `yyyy-MM-dd` or `yyyy-MM-dd HHmm`
+- Command: `deadline <task> /by <deadline>`
+
+Example: `deadline have a coffee /by 2025-02-23`
+
+<details>
+<summary> Output</summary>
+
+```
+☕ Brewing response ☕...
+=========================
+Got it, I've added this task: 
+
+[D][] have a coffee (by:Feb 23 2025)  
+Now you have 2 tasks in the list.
+```
+
+</details>
+
+### Event Tasks
+
+- Tasks that have a start and end date
+  - Date can be formatted as `yyyy-MM-dd` or `yyyy-MM-dd HHmm`
+  - Both start and end should follow the same format
+- Command: `event <task> /from <start date> /to <end date>`
+
+Example: `event go cafe hopping /from 2025-02-23 /to 2025-02-24`
+
+<details>
+<summary> Output</summary>
+
+```
+☕ Brewing response ☕...
+=========================
+Got it, I've added this task:
+[E][] have a coffee (from:Feb 23 2025 to: Feb 24 2025)
+Now you have 3 tasks in the list.
+```
+
+</details>
+
+## List
+
+- Prints the current tasks in the list
+- Command: `list`
+
+Example: `list`
+
+<details>
+<summary> Output</summary>
+
+```
+☕ Brewing response ☕...
+=========================
+1.[T][] have a coffee
+2.[D][] have a coffee (by:Feb 23 2025)
+3.[E][] have a coffee (from:Feb 23 2025 to: Feb 24 2025)
+```
+
+</details>
+
+## Delete
+
+- Removes the task at specified position on the list
+- Command: `delete <number>`
+
+Example: `delete 1`
+
+<details>
+<summary>Output</summary>
+
+```
+☕ Brewing response ☕...
+=========================
+Alright, I have removed this task:
+[T][] have a coffee
+```
+</details>
+
+## Find
+
+- Find a task based on keyword specified
+  - Can find based on task's [tag](##Tag)
+- Command: find /keywords
+
+Example: 'find /a coffee'
+
+<details>
+<summary>Output</summary>
+
+```
+☕ Brewing response ☕...
+=========================
+Here are the matching tasks in your list:
+[D][] have a coffee (by:Feb 23 2025)
+```
+</details>
+
+## Mark
+
+- Mark a task as done based on number on list
+- Command: `mark <task number>`
+
+Example: `mark 1`
+
+
+<details>
+<summary>Output</summary>
+
+```
+☕ Brewing response ☕...
+=========================
+Nice! I've marked this task as done:
+[D][X] have a coffee (by:Feb 23 2025)
+```
+</details>
+
+## Unmark
+
+- Mark a task as done based on number on list
+- Command: `unmark <task number>`
+
+Example: `unmark 1`
+
+
+<details>
+<summary>Output</summary>
+
+```
+☕ Brewing response ☕...
+=========================
+OK, I've marked this task as not done yet:
+[D][] have a coffee (by:Feb 23 2025)
+```
+</details>
+
+## Tag
+
+- Tag a task with what you want
+- Command: `tag <task number> /keyword`
+
+Example: `tag 1 /important`
+
+<details>
+<summary>Output</summary>
+
+```
+☕ Brewing response ☕...
+=========================
+Tagged [D][] have a coffee # important (by:Feb 23 2025)
+```
+</details>
+
+## Untag
+
+- Tag a task with what you want
+- Command: `untag <task number>`
+
+Example: `untag 1`
+
+<details>
+<summary>Output</summary>
+
+```
+☕ Brewing response ☕...
+=========================
+Untagged [D][] have a coffee (by:Feb 23 2025)
+```
+</details>
+
