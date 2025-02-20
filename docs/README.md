@@ -18,6 +18,7 @@ Here is an overview of commands you can make, click on each to find out more!
 | [deadline](#deadline-tasks) | adds a deadline task  |
 | [event](#event-tasks)       | adds a event task     |
 | [list](#list)               | prints out task list  |
+| [due](#due)                 | lists tasks due       |
 | [delete](#delete)           | deletes a task        |
 | [mark](#mark)               | mark a task as done   |
 | [unmark](unmark)            | unmark a task as done |
@@ -108,7 +109,20 @@ Example: `list`
   3.[E][] have a coffee (from:Feb 23 2025 to: Feb 24 2025)
   ```
 
+## Due
 
+- Lists tasks that are currently due/occurring
+- Command: `due`
+
+- Example: `due`
+**Output**:
+
+  ```md
+  ☕ Brewing response ☕...
+  =========================
+  1.[D][] submit cs2103t iP (by:Feb 21 2025)
+  ```
+  
 ## Delete
 
 - Removes the task at specified position on the list
