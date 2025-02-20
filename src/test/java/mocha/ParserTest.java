@@ -41,8 +41,8 @@ public class ParserTest {
             assertEquals(0, Parser.validateInput("hello"));
             fail();
         } catch (MochaException e) {
-            assertEquals("Searching through tasks... \n" +
-                    "sorry, it seems I have not learnt this command!", e.getMessage());
+            assertEquals("Sorry I am out of beans... \n" +
+                    "I do not understand this command!", e.getMessage());
         }
     }
 }

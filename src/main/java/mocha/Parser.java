@@ -59,7 +59,7 @@ public class Parser {
         }
 
         if (tmp.equals("find")) {
-            String keyword = split[1];
+            String keyword = keywords[1];
             return new FindCommand(keyword);
         }
         int idx = Integer.parseInt(split[1]);
