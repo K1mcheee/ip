@@ -20,7 +20,7 @@ public class TodoCommand extends Command {
     private String input;
 
     /**
-     * Constructor to initialise a Todo coommand.
+     * Constructor to initialise a Todo command.
      *
      * @param input String input from user.
      */

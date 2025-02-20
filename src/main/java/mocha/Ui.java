@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class Ui {
     /**Breakline to separate texts*/
     private static final String BR = "===================";
-    private Scanner scanner = new Scanner(System.in);
 
     /**
      * Prints default response for personality.

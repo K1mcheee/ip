@@ -53,18 +53,18 @@ public class Parser {
             throw new MochaException("Specify the task number after the command!");
         }
 
-        if (!split[1].matches("\\d+")) {
-            throw new MochaException("invalid format!");
-        }
-
         if (tmp.equals("find")) {
-            if (!split[1].contains("/")) {
+            if (!split[1].contains("/") || keywords.length != 2) {
                 throw new MochaException("command format should be: find /keyword");
             }
             String keyword = keywords[1];
             return new FindCommand(keyword);
         }
-        
+
+        if (!split[1].matches("\\d+")) {
+            throw new MochaException("invalid format!");
+        }
+
         int idx = Integer.parseInt(split[1]);
         if (tmp.equals("tag")) {
             if (keywords.length < 2 || keywords[1].contains("/")) {
