@@ -1,13 +1,7 @@
 package mocha;
 
-import mocha.command.Command;
-import mocha.command.DeadlineCommand;
-import mocha.command.TodoCommand;
-import mocha.task.Deadline;
-import mocha.task.Todo;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;

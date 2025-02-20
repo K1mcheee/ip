@@ -2,7 +2,6 @@ package mocha;
 
 import mocha.command.Command;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;

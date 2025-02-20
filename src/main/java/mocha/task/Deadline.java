@@ -29,15 +29,8 @@ public class Deadline extends Task {
      * initialises the due date.
      *
      * @param name Description of Deadline task.
-     * @param dueDate When the task is due.
+     * @param deadline When the task is due.
      */
-    public Deadline(String name, String dueDate) {
-        super(name);
-        this.dueDate = dueDate;
-        this.deadline = null;
-        this.deadlineTime = null;
-    }
-
     public Deadline(String name, LocalDate deadline) {
         super(name);
         this.dueDate = null;
@@ -52,6 +45,14 @@ public class Deadline extends Task {
         this.deadlineTime = deadlineTime;
     }
 
+    /**
+     * Parses user input for easier processing.
+     *
+     * @param input String input by user.
+     * @param idx index the tasks input starts.
+     * @return Formatted string for further parsing
+     * @throws MochaException When date format is incorrect.
+     */
     public static Deadline handle(String input, int idx) throws MochaException {
         String name = "";
 

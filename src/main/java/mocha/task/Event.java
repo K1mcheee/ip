@@ -41,16 +41,6 @@ public class Event extends Task {
      * @param from When the event starts.
      * @param to When the event ends.
      */
-    public Event(String name, String from, String to) {
-        super(name);
-        this.from = from;
-        this.to = to;
-        this.fromDate = null;
-        this.toDate = null;
-        this.fromTime = null;
-        this.toTime = null;
-    }
-
     public Event(String name, LocalDate from, LocalDate to) {
         super(name);
         this.from = null;
@@ -71,6 +61,14 @@ public class Event extends Task {
         this.toTime = to;
     }
 
+    /**
+     * Parses user input for easier processing.
+     *
+     * @param input String input by user.
+     * @param idx index the tasks input starts.
+     * @return Formatted string for further parsing
+     * @throws MochaException When date format is incorrect.
+     */
     public static Event handle(String input, int idx) throws MochaException {
         String name = "";
 

@@ -9,31 +9,11 @@ public class Ui {
     private static final String BR = "===================";
     private Scanner scanner = new Scanner(System.in);
 
-
     /**
-     * Returns the dividing line between texts.
-     *
-     * @return BR
+     * Prints default response for personality.
      */
-
-    public void br() {
-        System.out.println(BR);
-    }
-
-    /**
-     * Prints welcome message when bot is started.
-     */
-    public void welcome() {
-        System.out.println(BR + "\n Hello! I'm Mocha");
-        System.out.println(" What can I do for you? \n" + BR);
-    }
-
     public void response() {
         System.out.println("☕ Brewing response ☕... \n" + BR);
-    }
-
-    public String read() {
-        return scanner.nextLine();
     }
 
     /**

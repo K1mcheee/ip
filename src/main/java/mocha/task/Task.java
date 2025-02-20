@@ -30,6 +30,10 @@ public class Task {
         return this.name;
     }
 
+    /**
+     * Formats input to print to mocha.txt.
+     * @return Formatted input string.
+     */
     public String handle() {
         return this.name;
     }
