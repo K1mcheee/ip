@@ -38,13 +38,13 @@ Example: `todo have a coffee`
 <details>
 <summary> Output</summary>
 
-    ```
-    ☕ Brewing response ☕...  
-    =========================  
-    Got it, I've added this task:  
-    [T][] have a coffee  
-    Now you have 1 tasks in the list.
-    ```
+  ```md
+  ☕ Brewing response ☕...  
+  =========================  
+  Got it, I've added this task:  
+  [T][] have a coffee  
+  Now you have 1 tasks in the list.
+  ```
 
 </details>
 
@@ -60,14 +60,13 @@ Example: `deadline have a coffee /by 2025-02-23`
 <details>
 <summary> Output</summary>
 
-    ```
-    ☕ Brewing response ☕...
-    =========================
-    Got it, I've added this task: 
-    
-    [D][] have a coffee (by:Feb 23 2025)  
-    Now you have 2 tasks in the list.
-    ```
+  ```md
+  ☕ Brewing response ☕...
+  =========================
+  Got it, I've added this task: 
+  [D][] have a coffee (by:Feb 23 2025)  
+  Now you have 2 tasks in the list.
+  ```
 
 </details>
 
@@ -83,13 +82,13 @@ Example: `event go cafe hopping /from 2025-02-23 /to 2025-02-24`
 <details>
 <summary> Output</summary>
 
-    ```
-    ☕ Brewing response ☕...
-    =========================
-    Got it, I've added this task:
-    [E][] have a coffee (from:Feb 23 2025 to: Feb 24 2025)
-    Now you have 3 tasks in the list.
-    ```
+  ```md
+  ☕ Brewing response ☕...
+  =========================
+  Got it, I've added this task:
+  [E][] have a coffee (from:Feb 23 2025 to: Feb 24 2025)
+  Now you have 3 tasks in the list.
+  ```
 
 </details>
 
@@ -103,13 +102,13 @@ Example: `list`
 <details>
 <summary> Output</summary>
 
-    ```
-    ☕ Brewing response ☕...
-    =========================
-    1.[T][] have a coffee
-    2.[D][] have a coffee (by:Feb 23 2025)
-    3.[E][] have a coffee (from:Feb 23 2025 to: Feb 24 2025)
-    ```
+  ```md
+  ☕ Brewing response ☕...
+  =========================
+  1.[T][] have a coffee
+  2.[D][] have a coffee (by:Feb 23 2025)
+  3.[E][] have a coffee (from:Feb 23 2025 to: Feb 24 2025)
+  ```
 
 </details>
 
@@ -123,12 +122,12 @@ Example: `delete 1`
 <details>
 <summary>Output</summary>
 
-    ```
-    ☕ Brewing response ☕...
-    =========================
-    Alright, I have removed this task:
-    [T][] have a coffee
-    ```
+  ```md
+  ☕ Brewing response ☕...
+  =========================
+  Alright, I have removed this task:
+  [T][] have a coffee
+  ```
 </details>
 
 ## Find
@@ -142,12 +141,12 @@ Example: 'find /a coffee'
 <details>
 <summary>Output</summary>
 
-    ```
-    ☕ Brewing response ☕...
-    =========================
-    Here are the matching tasks in your list:
-    [D][] have a coffee (by:Feb 23 2025)
-    ```
+  ```md
+  ☕ Brewing response ☕...
+  =========================
+  Here are the matching tasks in your list:
+  [D][] have a coffee (by:Feb 23 2025)
+  ```
 </details>
 
 ## Mark
@@ -161,12 +160,12 @@ Example: `mark 1`
 <details>
 <summary>Output</summary>
 
-    ```
-    ☕ Brewing response ☕...
-    =========================
-    Nice! I've marked this task as done:
-    [D][X] have a coffee (by:Feb 23 2025)
-    ```
+  ```md
+  ☕ Brewing response ☕...
+  =========================
+  Nice! I've marked this task as done:
+  [D][X] have a coffee (by:Feb 23 2025)
+  ```
 
 </details>
 
@@ -181,12 +180,12 @@ Example: `unmark 1`
 <details>
 <summary>Output</summary>
 
-    ```
-    ☕ Brewing response ☕...
-    =========================
-    OK, I've marked this task as not done yet:
-    [D][] have a coffee (by:Feb 23 2025)
-    ```
+  ```md
+  ☕ Brewing response ☕...
+  =========================
+  OK, I've marked this task as not done yet:
+  [D][] have a coffee (by:Feb 23 2025)
+  ```
 
 </details>
 
@@ -200,11 +199,11 @@ Example: `tag 1 /important`
 <details>
 <summary>Output</summary>
 
-    ```
-    ☕ Brewing response ☕...
-    =========================
-    Tagged [D][] have a coffee # important (by:Feb 23 2025)
-    ```
+  ```md
+  ☕ Brewing response ☕...
+  =========================
+  Tagged [D][] have a coffee # important (by:Feb 23 2025)
+  ```
 
 </details>
 
@@ -218,11 +217,11 @@ Example: `untag 1`
 <details>
 <summary>Output</summary>
 
-    ```
-    ☕ Brewing response ☕...
-    =========================
-    Untagged [D][] have a coffee (by:Feb 23 2025)
-    ```
+  ```md
+  ☕ Brewing response ☕...
+  =========================
+  Untagged [D][] have a coffee (by:Feb 23 2025)
+  ```
 
 </details>
 
