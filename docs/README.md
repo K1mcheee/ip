@@ -36,8 +36,7 @@ There are 3 types of tasks you can add -- _todo_, _deadline_ and _event_ tasks t
 
 Example: `todo have a coffee`
 
-<details>
-<summary> Output</summary>
+**Output**:
 
   ```md
   ☕ Brewing response ☕...  
@@ -47,9 +46,6 @@ Example: `todo have a coffee`
   Now you have 1 tasks in the list.
   ```
 
-</details>
-
-
 ### Deadline Tasks
 
 - Tasks that have to be completed by a deadline
@@ -58,8 +54,7 @@ Example: `todo have a coffee`
 
 Example: `deadline have a coffee /by 2025-02-23`
 
-<details>
-<summary> Output</summary>
+**Output**:
 
   ```md
   ☕ Brewing response ☕...
@@ -69,7 +64,6 @@ Example: `deadline have a coffee /by 2025-02-23`
   Now you have 2 tasks in the list.
   ```
 
-</details>
 
 ### Event Tasks
 
@@ -80,8 +74,7 @@ Example: `deadline have a coffee /by 2025-02-23`
 
 Example: `event go cafe hopping /from 2025-02-23 /to 2025-02-24`
 
-<details>
-<summary> Output</summary>
+**Output**:
 
   ```md
   ☕ Brewing response ☕...
@@ -91,7 +84,6 @@ Example: `event go cafe hopping /from 2025-02-23 /to 2025-02-24`
   Now you have 3 tasks in the list.
   ```
 
-</details>
 
 ## List
 
@@ -100,8 +92,7 @@ Example: `event go cafe hopping /from 2025-02-23 /to 2025-02-24`
 
 Example: `list`
 
-<details>
-<summary> Output</summary>
+**Output**:
 
   ```md
   ☕ Brewing response ☕...
@@ -111,7 +102,6 @@ Example: `list`
   3.[E][] have a coffee (from:Feb 23 2025 to: Feb 24 2025)
   ```
 
-</details>
 
 ## Delete
 
@@ -120,16 +110,14 @@ Example: `list`
 
 Example: `delete 1`
 
-<details>
-<summary>Output</summary>
-
+**Output**:
   ```md
   ☕ Brewing response ☕...
   =========================
   Alright, I have removed this task:
   [T][] have a coffee
   ```
-</details>
+
 
 ## Find
 
@@ -139,8 +127,7 @@ Example: `delete 1`
 
 Example: 'find /a coffee'
 
-<details>
-<summary>Output</summary>
+**Output**:
 
   ```md
   ☕ Brewing response ☕...
@@ -148,7 +135,6 @@ Example: 'find /a coffee'
   Here are the matching tasks in your list:
   [D][] have a coffee (by:Feb 23 2025)
   ```
-</details>
 
 ## Mark
 
@@ -157,9 +143,7 @@ Example: 'find /a coffee'
 
 Example: `mark 1`
 
-
-<details>
-<summary>Output</summary>
+**Output**:
 
   ```md
   ☕ Brewing response ☕...
@@ -168,7 +152,6 @@ Example: `mark 1`
   [D][X] have a coffee (by:Feb 23 2025)
   ```
 
-</details>
 
 ## Unmark
 
@@ -177,9 +160,7 @@ Example: `mark 1`
 
 Example: `unmark 1`
 
-
-<details>
-<summary>Output</summary>
+**Output**:
 
   ```md
   ☕ Brewing response ☕...
@@ -188,7 +169,6 @@ Example: `unmark 1`
   [D][] have a coffee (by:Feb 23 2025)
   ```
 
-</details>
 
 ## Tag
 
@@ -197,16 +177,13 @@ Example: `unmark 1`
 
 Example: `tag 1 /important`
 
-<details>
-<summary>Output</summary>
+**Output**:
 
   ```md
   ☕ Brewing response ☕...
   =========================
   Tagged [D][] have a coffee # important (by:Feb 23 2025)
   ```
-
-</details>
 
 ## Untag
 
@@ -215,8 +192,7 @@ Example: `tag 1 /important`
 
 Example: `untag 1`
 
-<details>
-<summary>Output</summary>
+**Output**:
 
   ```md
   ☕ Brewing response ☕...
@@ -224,5 +200,4 @@ Example: `untag 1`
   Untagged [D][] have a coffee (by:Feb 23 2025)
   ```
 
-</details>
 
