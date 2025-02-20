@@ -35,6 +35,7 @@ There are 3 types of tasks you can add -- _todo_, _deadline_ and _event_ tasks t
 - Command: `todo <task>`
 
 Example: `todo have a coffee`
+
 <details>
 <summary> Output</summary>
 
